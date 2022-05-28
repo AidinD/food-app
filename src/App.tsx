@@ -1,8 +1,7 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import { Button } from 'antd';
-import { LoginPage } from './Pages/LoginPage';
+import LoginPage from './Pages/LoginPage';
+import { StoreProvider } from './Stores/StoreProvider';
 
 function App() {
   return (
