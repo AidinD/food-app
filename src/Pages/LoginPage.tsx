@@ -34,6 +34,10 @@ const LoginPage = (props: IAppProps) => {
         });
     }
 
+    const login = () => {
+        userStore?.onTryLogin();
+    }
+
     const onUserInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         userStore.setUserInput(event.target.value);
     }
@@ -62,7 +66,6 @@ const LoginPage = (props: IAppProps) => {
                     <Input
                         size="large"
                         placeholder="Username"
-                        value={userStore.userInput}
                         allowClear={true}
                         onChange={onUserInputChange}
                         prefix={<UserOutlined />}
@@ -71,6 +74,7 @@ const LoginPage = (props: IAppProps) => {
             </Form>
 
             <Button type='primary' onClick={addMeal}> Add Meal </Button>
+            <Button type='primary' onClick={login}> Login </Button>
             {mealList()}
         </div>
     )

@@ -32,9 +32,34 @@ export class UserStore {
     onTryLogin() {
         console.log("onTryLogin");
         // See if userInput exists as user in database
-        //this.onLogin(user);
+        let user: User = this.fetchUserIfExists(this.userInput)
+        if (user.id < 0 ) {
+            // User does not exist
+            alert("User does not exist");
+        }
+        else {
+            this.onLogin(user);
+        }
 
-        // else display error
+        // Change page
+    }
+
+    fetchUserIfExists(userInput: string) : User {
+        // Mocked, for now. Replace with API call
+        let user: User = {
+            id: 1,
+            name: userInput,
+            share: []
+        }
+
+        if (userInput != "Daniel") {
+            user = {
+                id: -1,
+                name: "empty",
+                share: []
+            }
+        }
+        return user;
     }
 
     onLogin(user: User) {
