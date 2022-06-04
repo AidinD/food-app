@@ -34,9 +34,11 @@ const LoginPage = (props: IAppProps) => {
         });
     }
 
+    
     const login = () => {
         userStore?.onTryLogin();
     }
+
 
     const onUserInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         userStore.setUserInput(event.target.value);
