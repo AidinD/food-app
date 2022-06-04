@@ -1,4 +1,4 @@
-import { makeAutoObservable, runInAction, reaction, observable, computed, action } from "mobx"
+import { makeAutoObservable, observable, computed, action } from "mobx"
 import { Meal } from "../Types/Meal";
 import RootStore from "./Index";
 
