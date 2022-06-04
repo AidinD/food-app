@@ -1,4 +1,4 @@
-import { makeAutoObservable, runInAction, reaction, observable, computed, action } from "mobx"
+import { makeAutoObservable, observable, action } from "mobx"
 import { User } from "../Types/User";
 import RootStore from "./Index";
 
@@ -16,6 +16,7 @@ export class UserStore {
         makeAutoObservable(this, {
             // Observables
             userInput: observable,
+
             // Computed
 
             // Actions
@@ -29,22 +30,29 @@ export class UserStore {
         this.userInput = userInput;
     }
 
-    onTryLogin() {
-        console.log("onTryLogin");
+    startLoginFlow() {
+        console.log("TryLogin");
+
         // See if userInput exists as user in database
         let user: User = this.fetchUserIfExists(this.userInput)
-        if (user.id < 0 ) {
+
+        if (user.id < 0) {
             // User does not exist
             alert("User does not exist");
         }
         else {
-            this.onLogin(user);
+            this.login(user);
         }
 
         // Change page
     }
 
-    fetchUserIfExists(userInput: string) : User {
+    login(user: User) {
+        this.setCurrentUser(user);
+        this.saveCurrentUserToLocalStorage();
+    }
+
+    fetchUserIfExists(userInput: string): User {
         // Mocked, for now. Replace with API call
         let user: User = {
             id: 1,
@@ -52,7 +60,7 @@ export class UserStore {
             share: []
         }
 
-        if (userInput != "Daniel") {
+        if (userInput !== "Daniel") {
             user = {
                 id: -1,
                 name: "empty",
@@ -60,11 +68,6 @@ export class UserStore {
             }
         }
         return user;
-    }
-
-    onLogin(user: User) {
-        this.setCurrentUser(user);
-        this.saveCurrentUserToLocalStorage();
     }
 
     setCurrentUser(user: User | undefined) {

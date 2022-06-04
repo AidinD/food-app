@@ -34,18 +34,14 @@ const LoginPage = (props: IAppProps) => {
         });
     }
 
-    
-    const login = () => {
-        userStore?.onTryLogin();
+
+    const onLogin = () => {
+        userStore?.startLoginFlow();
     }
 
 
     const onUserInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         userStore.setUserInput(event.target.value);
-    }
-
-    const onFinish = (value: string) => {
-        console.log("value", value);
     }
 
     return (
@@ -59,7 +55,7 @@ const LoginPage = (props: IAppProps) => {
             </Row>
             <Form
                 name='login'
-                onFinish={onFinish}
+                onFinish={onLogin}
             >
                 <Form.Item
                     name="username"
@@ -73,10 +69,13 @@ const LoginPage = (props: IAppProps) => {
                         prefix={<UserOutlined />}
                     />
                 </Form.Item>
+                <Form.Item
+                    name="loginButton">
+                    <Button type='primary' onClick={onLogin}> Login </Button>
+                </Form.Item>
             </Form>
 
             <Button type='primary' onClick={addMeal}> Add Meal </Button>
-            <Button type='primary' onClick={login}> Login </Button>
             {mealList()}
         </div>
     )
