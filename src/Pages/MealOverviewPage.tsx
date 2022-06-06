@@ -3,7 +3,6 @@ import { observer } from 'mobx-react-lite';
 import { Meal } from '../Types/Meal';
 import { useEffect } from 'react';
 import { useStore } from '../Stores/StoreProvider';
-import { useRouterStore } from 'mobx-state-router';
 
 interface IMealOverviewProps {
 }
