@@ -1,10 +1,11 @@
+import { RouterView } from 'mobx-state-router';
 import './App.css';
-import LoginPage from './Pages/LoginPage';
+import { viewMap } from './Routing/ViewMap';
 
 function App() {
   return (
     <div className="App">
-      <LoginPage />
+      <RouterView viewMap={viewMap} />
     </div>
   );
 }

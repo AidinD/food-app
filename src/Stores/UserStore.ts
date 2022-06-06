@@ -1,8 +1,10 @@
 import { makeAutoObservable, observable, action } from "mobx"
+import { useRouterStore } from "mobx-state-router";
 import { User } from "../Types/User";
 import RootStore from "./Index";
 export class UserStore {
     rootStore: RootStore;
+    routerStore = useRouterStore();
 
     currentUser: User | undefined = undefined;
     userInput: string = "";
@@ -44,6 +46,7 @@ export class UserStore {
         }
 
         // Change page
+        this.routerStore.goTo("mealOverview");
     }
 
     login(user: User) {

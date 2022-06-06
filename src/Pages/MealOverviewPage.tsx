@@ -1,15 +1,14 @@
-import { Button, Form, Input, PageHeader, Row } from 'antd';
+import { Button, PageHeader, Row } from 'antd';
 import { observer } from 'mobx-react-lite';
-import * as React from 'react';
 import { Meal } from '../Types/Meal';
-import { UserOutlined } from '@ant-design/icons';
 import { useEffect } from 'react';
 import { useStore } from '../Stores/StoreProvider';
+import { useRouterStore } from 'mobx-state-router';
 
-interface IMealsOverviewProps {
+interface IMealOverviewProps {
 }
 
-const MealsOverviewPage = (props: IMealsOverviewProps) => {
+const MealOverviewPage = (props: IMealOverviewProps) => {
     const { mealStore } = useStore();
 
     useEffect(() => {
@@ -43,7 +42,7 @@ const MealsOverviewPage = (props: IMealsOverviewProps) => {
                 <PageHeader
                     className="site-page-header"
                     backIcon={false}
-                    title="Meals Overview"
+                    title="Meal Overview"
                 />
             </Row>
 
@@ -53,4 +52,4 @@ const MealsOverviewPage = (props: IMealsOverviewProps) => {
     )
 };
 
-export default observer(MealsOverviewPage);
+export default observer(MealOverviewPage);

@@ -4,15 +4,22 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { StoreProvider } from './Stores/StoreProvider';
+import { RouterContext } from 'mobx-state-router';
+import { initRouter } from './Routing/InitRouter';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
+const routerStore = initRouter();
+
 root.render(
   <React.StrictMode>
-    <StoreProvider>
-      <App />
-    </StoreProvider>
+    <RouterContext.Provider value={routerStore}>
+      <StoreProvider>
+        <App />
+      </StoreProvider>
+    </RouterContext.Provider>
   </React.StrictMode>
 );
 
