@@ -1,7 +1,6 @@
 import { makeAutoObservable, observable, action } from "mobx"
 import { User } from "../Types/User";
 import RootStore from "./Index";
-
 export class UserStore {
     rootStore: RootStore;
 
