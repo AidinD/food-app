@@ -4,6 +4,7 @@ import * as React from 'react';
 import { useStore } from '../Stores/StoreProvider';
 import { Meal } from '../Types/Meal';
 import { UserOutlined } from '@ant-design/icons';
+import { useEffect } from 'react';
 
 interface IAppProps {
 }
@@ -12,14 +13,17 @@ const LoginPage = (props: IAppProps) => {
     const { userStore } = useStore();
     const { mealStore } = useStore();
 
+    useEffect(() => {
+    }, [])
+
     const mealList = () => {
-        return mealStore?.allMeals.map((meal: Meal) => {
+        return mealStore.allMeals.map((meal: Meal) => {
             return <div key={meal.id}>{meal.name}</div>
         });
     }
 
     const addMeal = () => {
-        mealStore?.addMeal({
+        mealStore.addMeal({
             id: mealStore?.allMeals.length + 1,
             name: 'New Meal',
             description: 'New Description',
@@ -35,7 +39,7 @@ const LoginPage = (props: IAppProps) => {
     }
 
     const onLogin = () => {
-        userStore?.startLoginFlow();
+        userStore.startLoginFlow();
     }
 
     const onUserInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,11 +62,13 @@ const LoginPage = (props: IAppProps) => {
                 <Form.Item
                     name="username"
                     rules={[{ required: true, message: 'Please input your username!' }]}
+                    initialValue={userStore.userInput}
                 >
                     <Input
                         size="large"
                         placeholder="Username"
                         allowClear={true}
+                        value={userStore.userInput}
                         onChange={onUserInputChange}
                         prefix={<UserOutlined />}
                     />

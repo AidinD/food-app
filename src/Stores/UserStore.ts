@@ -82,7 +82,9 @@ export class UserStore {
     getUserFromLocalStorage = () => {
         const user = localStorage.getItem("user");
         if (user) {
-            this.setCurrentUser(JSON.parse(user));
+            const storedUser = JSON.parse(user);
+            this.setCurrentUser(storedUser);
+            this.setUserInput(storedUser.name);
         } else {
             this.setCurrentUser(undefined);
         }
