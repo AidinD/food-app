@@ -18,6 +18,12 @@ export class RouterStoreWrapper {
         });
     }
 
+    goToLogin(options?: {
+        [key: string]: any;
+    }) {
+        this.routerStore.goTo("home", options);
+    }
+
     goToMealOverview(options?: {
         [key: string]: any;
     }) {

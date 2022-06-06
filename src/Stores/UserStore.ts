@@ -38,12 +38,10 @@ export class UserStore {
         if (user.id < 0) {
             // User does not exist
             alert("User does not exist");
-        }
-        else {
-            this.login(user);
+            return;
         }
 
-        // Change page
+        this.login(user);
         this.rootStore.routerStore.goToMealOverview();
     }
 
@@ -59,6 +57,9 @@ export class UserStore {
             name: userInput,
             share: []
         }
+
+        // return 200 or 204 or 404 here if no user found
+        // Internet is indescisive
 
         if (userInput !== "Daniel") {
             user = {
@@ -90,4 +91,9 @@ export class UserStore {
             this.setCurrentUser(undefined);
         }
     }
+
+    isLoggedIn = (): boolean => {
+        return this.currentUser !== undefined;
+    }
+
 }
