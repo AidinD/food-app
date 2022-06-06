@@ -9,26 +9,14 @@ body {
 }
 
 .container {
-  max-width: 600px;
-  margin: 0 auto;
-}
-
-.ant-row {
-  align-content: center;
-  justify-content: center;
-}
-
-.ant-row.title-row {
-  margin-top: 35%;
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .site-page-header span {
   color: white;
-}
-
-.ant-form {
-  width: 50%;
-  margin: 0 auto;
 }
 
 .ant-form-item-explain-error {

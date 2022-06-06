@@ -24,36 +24,38 @@ const LoginPage = (props: IAppProps) => {
 
     return (
         <div className='container'>
-            <Row className='title-row'>
+            <Row justify='center' align='middle' className='title-row'>
                 <PageHeader
                     className="site-page-header"
                     backIcon={false}
                     title="Login page"
                 />
             </Row>
-            <Form
-                name='login'
-                onFinish={onLogin}
-            >
-                <Form.Item
-                    name="username"
-                    rules={[{ required: true, message: 'Please input your username!' }]}
-                    initialValue={userStore.userInput}
+            <Row justify='center' align='middle' className='form-row'>
+                <Form
+                    name='login'
+                    onFinish={onLogin}
                 >
-                    <Input
-                        size="large"
-                        placeholder="Username"
-                        allowClear={true}
-                        value={userStore.userInput}
-                        onChange={onUserInputChange}
-                        prefix={<UserOutlined />}
-                    />
-                </Form.Item>
-                <Form.Item
-                    name="loginButton">
-                    <Button type='primary' onClick={onLogin}> Login </Button>
-                </Form.Item>
-            </Form>
+                    <Form.Item
+                        name="username"
+                        rules={[{ required: true, message: 'Please input your username!' }]}
+                        initialValue={userStore.userInput}
+                    >
+                        <Input
+                            size="large"
+                            placeholder="Username"
+                            allowClear={true}
+                            value={userStore.userInput}
+                            onChange={onUserInputChange}
+                            prefix={<UserOutlined />}
+                        />
+                    </Form.Item>
+                    <Form.Item
+                        name="loginButton">
+                        <Button type='primary' onClick={onLogin}> Login </Button>
+                    </Form.Item>
+                </Form>
+            </Row>
         </div>
     )
 };
