@@ -5,6 +5,7 @@ import { useStore } from "../Stores/StoreProvider";
 import { UserOutlined } from "@ant-design/icons";
 import { useEffect } from "react";
 import "./LoginPage.css";
+import AddUserForm from "../Components/AddUserForm";
 
 interface IAppProps {}
 
@@ -20,8 +21,10 @@ const LoginPage = (props: IAppProps) => {
 
     const onSignup = () => {};
 
-    const onUserInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        userStore.setUserInput(event.target.value);
+    const onUsernameInputChange = (
+        event: React.ChangeEvent<HTMLInputElement>
+    ) => {
+        userStore.setUsernameInput(event.target.value);
     };
 
     return (
@@ -43,15 +46,15 @@ const LoginPage = (props: IAppProps) => {
                                 message: "Please input your username!",
                             },
                         ]}
-                        initialValue={userStore.userInput}
+                        initialValue={userStore.usernameInput}
                     >
                         <Input
                             size="large"
                             placeholder="Username"
                             allowClear={true}
-                            value={userStore.userInput}
-                            onChange={onUserInputChange}
-                            prefix={<UserOutlined />}
+                            value={userStore.usernameInput}
+                            onChange={onUsernameInputChange}
+                            prefix={<UserOutlined style={{ color: "grey" }} />}
                         />
                     </Form.Item>
                     <Form.Item name="loginButton" className="login-button">
@@ -76,7 +79,10 @@ const LoginPage = (props: IAppProps) => {
                 onCancel={() => {
                     uiStore.setShowSignUpModal(false);
                 }}
-            ></Modal>
+                okText="Sign up"
+            >
+                <AddUserForm onSignup={onSignup} />
+            </Modal>
         </div>
     );
 };

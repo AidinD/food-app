@@ -3,9 +3,17 @@
 }
 
 .ant-form-item-explain-error {
-    color: black
+    color: black;
+}
+
+.ant-modal-header {
+    background-color: #00ac5c;
+}
+
+.ant-modal-footer {
+    background-color: #45b27f;
 }
 
 .login-button {
-    margin-bottom: 0
+    margin-bottom: 0;
 }

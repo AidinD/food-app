@@ -1,16 +1,16 @@
-@import '~antd/dist/antd.css';
+@import "~antd/dist/antd.css";
 
 body {
-  background-color: #00ac5c;
+    background-color: #00ac5c;
 }
 
 .App {
-  text-align: center;
+    text-align: center;
 }
 
 .container {
-  position: fixed;
-  top: 40%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }

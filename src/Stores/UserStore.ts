@@ -6,7 +6,8 @@ export class UserStore {
     rootStore: RootStore;
 
     currentUser: User | undefined = undefined;
-    userInput: string = "";
+    usernameInput: string = "";
+    shareInput: string = "";
 
     constructor(rootStore: RootStore) {
         this.rootStore = rootStore;
@@ -15,29 +16,35 @@ export class UserStore {
 
         makeAutoObservable(this, {
             // Observables
-            userInput: observable,
+            usernameInput: observable,
             currentUser: observable,
+            shareInput: observable,
 
             // Computed
 
             // Actions
             setCurrentUser: action,
+            setShareInput: action,
             saveCurrentUserToLocalStorage: action,
-            setUserInput: action,
+            setUsernameInput: action,
             isLoggedIn: action,
             startLoginFlow: action,
         });
     }
 
-    setUserInput(userInput: string) {
-        this.userInput = userInput;
+    setUsernameInput(userInput: string) {
+        this.usernameInput = userInput;
+    }
+
+    setShareInput(shareInput: string) {
+        this.shareInput = shareInput;
     }
 
     startLoginFlow = () => {
         console.log("TryLogin");
 
         // See if userInput exists as user in database
-        let user: User = this.fetchUserIfExists(this.userInput);
+        let user: User = this.fetchUserIfExists(this.usernameInput);
 
         if (user.id < 0) {
             // User does not exist
@@ -90,7 +97,7 @@ export class UserStore {
         if (user) {
             const storedUser = JSON.parse(user);
             this.setCurrentUser(storedUser);
-            this.setUserInput(storedUser.name);
+            this.setUsernameInput(storedUser.name);
         } else {
             this.setCurrentUser(undefined);
         }

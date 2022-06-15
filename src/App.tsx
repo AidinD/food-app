@@ -1,6 +1,7 @@
+import "./App.css";
+import { observer } from "mobx-react-lite";
 import { RouterView } from "mobx-state-router";
 import { useEffect } from "react";
-import "./App.css";
 import { viewMap } from "./Routing/ViewMap";
 import { useStore } from "./Stores/StoreProvider";
 
@@ -20,4 +21,4 @@ const App = () => {
     );
 };
 
-export default App;
+export default observer(App);
