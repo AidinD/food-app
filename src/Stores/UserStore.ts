@@ -1,6 +1,7 @@
-import { makeAutoObservable, observable, action } from "mobx"
+import { makeAutoObservable, observable, action } from "mobx";
 import { User } from "../Types/User";
-import RootStore from "./Index";
+import RootStore from "./RootStore";
+
 export class UserStore {
     rootStore: RootStore;
 
@@ -15,6 +16,7 @@ export class UserStore {
         makeAutoObservable(this, {
             // Observables
             userInput: observable,
+            currentUser: observable,
 
             // Computed
 
@@ -22,6 +24,8 @@ export class UserStore {
             setCurrentUser: action,
             saveCurrentUserToLocalStorage: action,
             setUserInput: action,
+            isLoggedIn: action,
+            startLoginFlow: action,
         });
     }
 
@@ -29,11 +33,11 @@ export class UserStore {
         this.userInput = userInput;
     }
 
-    startLoginFlow() {
+    startLoginFlow = () => {
         console.log("TryLogin");
 
         // See if userInput exists as user in database
-        let user: User = this.fetchUserIfExists(this.userInput)
+        let user: User = this.fetchUserIfExists(this.userInput);
 
         if (user.id < 0) {
             // User does not exist
@@ -43,20 +47,20 @@ export class UserStore {
 
         this.login(user);
         this.rootStore.routerStore.goToMealOverview();
-    }
+    };
 
-    login(user: User) {
+    login = (user: User) => {
         this.setCurrentUser(user);
         this.saveCurrentUserToLocalStorage();
-    }
+    };
 
-    fetchUserIfExists(userInput: string): User {
+    fetchUserIfExists = (userInput: string): User => {
         // Mocked, for now. Replace with API call
         let user: User = {
             id: 1,
             name: userInput,
-            share: []
-        }
+            share: [],
+        };
 
         // return 200 or 204 or 404 here if no user found
         // Internet is indescisive
@@ -65,21 +69,21 @@ export class UserStore {
             user = {
                 id: -1,
                 name: "empty",
-                share: []
-            }
+                share: [],
+            };
         }
         return user;
-    }
+    };
 
-    setCurrentUser(user: User | undefined) {
+    setCurrentUser = (user: User | undefined) => {
         this.currentUser = user;
-    }
+    };
 
-    saveCurrentUserToLocalStorage() {
+    saveCurrentUserToLocalStorage = () => {
         if (this.currentUser) {
             localStorage.setItem("user", JSON.stringify(this.currentUser));
         }
-    }
+    };
 
     getUserFromLocalStorage = () => {
         const user = localStorage.getItem("user");
@@ -90,10 +94,9 @@ export class UserStore {
         } else {
             this.setCurrentUser(undefined);
         }
-    }
+    };
 
     isLoggedIn = (): boolean => {
         return this.currentUser !== undefined;
-    }
-
+    };
 }

@@ -14,11 +14,3 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
 }
-
-.site-page-header span {
-  color: white;
-}
-
-.ant-form-item-explain-error {
-  color: black
-}
