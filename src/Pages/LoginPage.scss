@@ -1,3 +1,5 @@
+@import "../index.scss";
+
 .site-page-header span {
     color: white;
 }
@@ -7,11 +9,11 @@
 }
 
 .ant-modal-header {
-    background-color: #00ac5c;
+    background-color: $base-color;
 }
 
 .ant-modal-footer {
-    background-color: #45b27f;
+    background-color: $base-color-secondary;
 }
 
 .login-button {

@@ -1,7 +1,8 @@
 @import "~antd/dist/antd.css";
+@import "./index.scss";
 
 body {
-    background-color: #00ac5c;
+    background-color: $base-color;
 }
 
 .App {

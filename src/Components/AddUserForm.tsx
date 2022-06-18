@@ -3,9 +3,11 @@ import React from "react";
 import { useStore } from "../Stores/StoreProvider";
 import { UserAddOutlined, UsergroupAddOutlined } from "@ant-design/icons";
 import { observer } from "mobx-react-lite";
+import { UserDTO } from "../Types/User";
 
 interface IAddUserProps {
-    onSignup: () => void;
+    form: any; // TODO what type is this??
+    onSignup: (user: UserDTO) => void;
 }
 
 const AddUserForm = (props: IAddUserProps) => {
@@ -24,13 +26,14 @@ const AddUserForm = (props: IAddUserProps) => {
     return (
         <Form
             name="signup"
+            form={props.form}
             onFinish={props.onSignup}
             labelCol={{ span: 5 }}
             wrapperCol={{ span: 16 }}
         >
             <Form.Item
-                name="username"
-                label="Username"
+                name="name"
+                label="Name"
                 rules={[
                     {
                         required: true,
@@ -40,8 +43,9 @@ const AddUserForm = (props: IAddUserProps) => {
                 initialValue={userStore.usernameInput}
             >
                 <Input
+                    name="name"
                     size="large"
-                    placeholder="Username"
+                    placeholder="Name"
                     allowClear={true}
                     value={userStore.usernameInput}
                     onChange={onUsernameInputChange}
@@ -50,6 +54,7 @@ const AddUserForm = (props: IAddUserProps) => {
             </Form.Item>
             <Form.Item name="share" label="Share">
                 <Input
+                    name="share"
                     size="large"
                     placeholder="Share with (comma separated)"
                     allowClear={true}

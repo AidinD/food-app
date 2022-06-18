@@ -1,9 +1,12 @@
 import { makeAutoObservable, observable, action } from "mobx";
-import { User } from "../Types/User";
+import { User, UserDTO } from "../Types/User";
 import RootStore from "./RootStore";
+import { UiStore } from "./UiStore";
+import configData from "../Config/config.json";
 
 export class UserStore {
     rootStore: RootStore;
+    uiStore: UiStore;
 
     currentUser: User | undefined = undefined;
     usernameInput: string = "";
@@ -11,6 +14,7 @@ export class UserStore {
 
     constructor(rootStore: RootStore) {
         this.rootStore = rootStore;
+        this.uiStore = rootStore.uiStore;
 
         this.getUserFromLocalStorage();
 
@@ -41,8 +45,6 @@ export class UserStore {
     }
 
     startLoginFlow = () => {
-        console.log("TryLogin");
-
         // See if userInput exists as user in database
         let user: User = this.fetchUserIfExists(this.usernameInput);
 
@@ -56,6 +58,31 @@ export class UserStore {
         this.rootStore.routerStore.goToMealOverview();
     };
 
+    startSignUpFlow = async (user: UserDTO) => {
+        this.uiStore.setIsLoading(true);
+
+        const requestOptions = {
+            method: "PUT",
+            body: JSON.stringify(user),
+            headers: { "Content-Type": "application/json" },
+        };
+
+        try {
+            const response = await fetch(
+                configData.SERVER_URL + "/user",
+                requestOptions
+            );
+            const dataJson = await response.json();
+            if (response.status === 200) {
+                this.uiStore.setShowSignUpModal(false);
+            } else throw new Error(dataJson.data.message);
+        } catch (error) {
+            alert(error);
+        } finally {
+            this.uiStore.setIsLoading(false);
+        }
+    };
+
     login = (user: User) => {
         this.setCurrentUser(user);
         this.saveCurrentUserToLocalStorage();
@@ -66,7 +93,7 @@ export class UserStore {
         let user: User = {
             id: 1,
             name: userInput,
-            share: [],
+            share: "",
         };
 
         // return 200 or 204 or 404 here if no user found
@@ -76,7 +103,7 @@ export class UserStore {
             user = {
                 id: -1,
                 name: "empty",
-                share: [],
+                share: "",
             };
         }
         return user;

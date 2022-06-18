@@ -5,7 +5,6 @@ import RootStore from "./RootStore";
 export class MealStore {
     rootStore: RootStore;
     meals: Meal[] = [];
-    isLoading: boolean = false;
 
     constructor(rootStore: RootStore) {
         this.rootStore = rootStore;
@@ -13,7 +12,6 @@ export class MealStore {
         makeAutoObservable(this, {
             // Observables
             meals: observable,
-            isLoading: observable,
 
             // Computed
             allMeals: computed,

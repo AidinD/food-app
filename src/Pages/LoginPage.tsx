@@ -4,14 +4,16 @@ import * as React from "react";
 import { useStore } from "../Stores/StoreProvider";
 import { UserOutlined } from "@ant-design/icons";
 import { useEffect } from "react";
-import "./LoginPage.css";
+import "./LoginPage.scss";
 import AddUserForm from "../Components/AddUserForm";
+import { UserDTO } from "../Types/User";
 
 interface IAppProps {}
 
 const LoginPage = (props: IAppProps) => {
     const { userStore } = useStore();
     const { uiStore } = useStore();
+    const [form] = Form.useForm();
 
     useEffect(() => {}, []);
 
@@ -19,7 +21,9 @@ const LoginPage = (props: IAppProps) => {
         userStore.startLoginFlow();
     };
 
-    const onSignup = () => {};
+    const onSignup = async (values: UserDTO) => {
+        await userStore.startSignUpFlow(values);
+    };
 
     const onUsernameInputChange = (
         event: React.ChangeEvent<HTMLInputElement>
@@ -75,13 +79,13 @@ const LoginPage = (props: IAppProps) => {
             <Modal
                 title="Sign up"
                 visible={uiStore.showSignUpModal}
-                onOk={onSignup}
+                onOk={form.submit}
                 onCancel={() => {
                     uiStore.setShowSignUpModal(false);
                 }}
                 okText="Sign up"
             >
-                <AddUserForm onSignup={onSignup} />
+                <AddUserForm form={form} onSignup={onSignup} />
             </Modal>
         </div>
     );
