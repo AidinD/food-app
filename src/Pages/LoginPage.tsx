@@ -17,8 +17,8 @@ const LoginPage = (props: IAppProps) => {
 
     useEffect(() => {}, []);
 
-    const onLogin = () => {
-        userStore.startLoginFlow();
+    const onLogin = async (value: any) => {
+        await userStore.startLoginFlow(value.name);
     };
 
     const onSignup = async (values: UserDTO) => {
@@ -31,6 +31,7 @@ const LoginPage = (props: IAppProps) => {
         userStore.setUsernameInput(event.target.value);
     };
 
+    // TODO implement onFinishFailed on all forms
     return (
         <div className="container">
             <Row justify="center" align="middle" className="title-row">
@@ -43,7 +44,7 @@ const LoginPage = (props: IAppProps) => {
             <Row justify="center" align="middle" className="form-row">
                 <Form name="login" onFinish={onLogin}>
                     <Form.Item
-                        name="username"
+                        name="name"
                         rules={[
                             {
                                 required: true,
@@ -53,8 +54,9 @@ const LoginPage = (props: IAppProps) => {
                         initialValue={userStore.usernameInput}
                     >
                         <Input
+                            name="name"
                             size="large"
-                            placeholder="Username"
+                            placeholder="Name"
                             allowClear={true}
                             value={userStore.usernameInput}
                             onChange={onUsernameInputChange}
@@ -62,7 +64,7 @@ const LoginPage = (props: IAppProps) => {
                         />
                     </Form.Item>
                     <Form.Item name="loginButton" className="login-button">
-                        <Button type="primary" onClick={onLogin}>
+                        <Button type="primary" htmlType="submit">
                             Login
                         </Button>
                     </Form.Item>

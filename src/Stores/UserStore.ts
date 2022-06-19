@@ -44,9 +44,31 @@ export class UserStore {
         this.shareInput = shareInput;
     }
 
-    startLoginFlow = () => {
+    startLoginFlow = async (name: string) => {
+        this.uiStore.setIsLoading(true);
         // See if userInput exists as user in database
         let user: User = this.fetchUserIfExists(this.usernameInput);
+
+        const requestOptions = {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+        };
+
+        try {
+            const response = await fetch(
+                configData.SERVER_URL + "user/" + name,
+                requestOptions
+            );
+            const dataJson = await response.json();
+            if (response.status === 200) {
+                alert("User exists");
+            } else throw new Error(dataJson.data.message);
+        } catch (error) {
+            console.log("error", error);
+            alert(error);
+        } finally {
+            this.uiStore.setIsLoading(false);
+        }
 
         if (user.id < 0) {
             // User does not exist
@@ -69,12 +91,13 @@ export class UserStore {
 
         try {
             const response = await fetch(
-                configData.SERVER_URL + "/user",
+                configData.SERVER_URL + "user",
                 requestOptions
             );
             const dataJson = await response.json();
             if (response.status === 200) {
                 this.uiStore.setShowSignUpModal(false);
+                alert("User successfully created");
             } else throw new Error(dataJson.data.message);
         } catch (error) {
             alert(error);
