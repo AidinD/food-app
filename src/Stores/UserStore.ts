@@ -3,6 +3,7 @@ import { User, UserDTO } from "../Types/User";
 import RootStore from "./RootStore";
 import { UiStore } from "./UiStore";
 import configData from "../Config/config.json";
+import { ResponseJson } from "../Types/Shared";
 
 export class UserStore {
     rootStore: RootStore;
@@ -46,8 +47,6 @@ export class UserStore {
 
     startLoginFlow = async (name: string) => {
         this.uiStore.setIsLoading(true);
-        // See if userInput exists as user in database
-        let user: User = this.fetchUserIfExists(this.usernameInput);
 
         const requestOptions = {
             method: "GET",
@@ -59,25 +58,19 @@ export class UserStore {
                 configData.SERVER_URL + "user/" + name,
                 requestOptions
             );
-            const dataJson = await response.json();
-            if (response.status === 200) {
-                alert("User exists");
-            } else throw new Error(dataJson.data.message);
+            const dataJson: ResponseJson = await response.json();
+            if (dataJson.status === 200) {
+                this.login(dataJson.data as User);
+                this.rootStore.routerStore.goToMealOverview();
+            } else if (dataJson.status === 204) {
+                throw new Error("User does not exist");
+            }
         } catch (error) {
             console.log("error", error);
             alert(error);
         } finally {
             this.uiStore.setIsLoading(false);
         }
-
-        if (user.id < 0) {
-            // User does not exist
-            alert("User does not exist");
-            return;
-        }
-
-        this.login(user);
-        this.rootStore.routerStore.goToMealOverview();
     };
 
     startSignUpFlow = async (user: UserDTO) => {
@@ -94,7 +87,7 @@ export class UserStore {
                 configData.SERVER_URL + "user",
                 requestOptions
             );
-            const dataJson = await response.json();
+            const dataJson: ResponseJson = await response.json();
             if (response.status === 200) {
                 this.uiStore.setShowSignUpModal(false);
                 alert("User successfully created");
@@ -109,27 +102,6 @@ export class UserStore {
     login = (user: User) => {
         this.setCurrentUser(user);
         this.saveCurrentUserToLocalStorage();
-    };
-
-    fetchUserIfExists = (userInput: string): User => {
-        // Mocked, for now. Replace with API call
-        let user: User = {
-            id: 1,
-            name: userInput,
-            share: "",
-        };
-
-        // return 200 or 204 or 404 here if no user found
-        // Internet is indescisive
-
-        if (userInput !== "Daniel") {
-            user = {
-                id: -1,
-                name: "empty",
-                share: "",
-            };
-        }
-        return user;
     };
 
     setCurrentUser = (user: User | undefined) => {
