@@ -4,6 +4,8 @@ import RootStore from "./RootStore";
 import { UiStore } from "./UiStore";
 import configData from "../Config/config.json";
 import { ResponseJson } from "../Types/Shared";
+import { showNotification } from "../Utils/Notification";
+import { stringify } from "querystring";
 
 export class UserStore {
     rootStore: RootStore;
@@ -65,9 +67,8 @@ export class UserStore {
             } else if (dataJson.status === 204) {
                 throw new Error("User does not exist");
             }
-        } catch (error) {
-            console.log("error", error);
-            alert(error);
+        } catch (error: any) {
+            showNotification(error.toString(), "", "error", 0);
         } finally {
             this.uiStore.setIsLoading(false);
         }
@@ -90,10 +91,10 @@ export class UserStore {
             const dataJson: ResponseJson = await response.json();
             if (response.status === 200) {
                 this.uiStore.setShowSignUpModal(false);
-                alert("User successfully created");
+                showNotification("User successfully created", "", "success", 3);
             } else throw new Error(dataJson.data.message);
-        } catch (error) {
-            alert(error);
+        } catch (error: any) {
+            showNotification(error.toString(), "", "error", 0);
         } finally {
             this.uiStore.setIsLoading(false);
         }
