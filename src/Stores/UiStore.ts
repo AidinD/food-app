@@ -5,7 +5,10 @@ export class UiStore {
     rootStore: RootStore;
 
     isLoading: boolean = false;
+
+    // Modals
     showSignUpModal: boolean = false;
+    showAddMealModal: boolean = false;
 
     constructor(rootStore: RootStore) {
         this.rootStore = rootStore;
@@ -14,12 +17,14 @@ export class UiStore {
             // Observables
             isLoading: observable,
             showSignUpModal: observable,
+            showAddMealModal: observable,
 
             // Computed
 
             // Actions
             setIsLoading: action,
             setShowSignUpModal: action,
+            setShowAddMealModal: action,
         });
     }
 
@@ -29,5 +34,9 @@ export class UiStore {
 
     setShowSignUpModal = (showSignUpModal: boolean) => {
         this.showSignUpModal = showSignUpModal;
+    };
+
+    setShowAddMealModal = (showAddMealModal: boolean) => {
+        this.showAddMealModal = showAddMealModal;
     };
 }

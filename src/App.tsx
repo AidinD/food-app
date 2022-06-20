@@ -1,5 +1,4 @@
 import "./App.scss";
-import { observer } from "mobx-react-lite";
 import { RouterView } from "mobx-state-router";
 import { useEffect } from "react";
 import { viewMap } from "./Routing/ViewMap";
@@ -21,4 +20,4 @@ const App = () => {
     );
 };
 
-export default observer(App);
+export default App;

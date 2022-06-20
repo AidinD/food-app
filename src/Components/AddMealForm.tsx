@@ -5,12 +5,12 @@ import { UserAddOutlined } from "@ant-design/icons";
 import { observer } from "mobx-react-lite";
 import { UserDTO } from "../Types/User";
 
-interface IAddUserProps {
+interface IAddMealProps {
     form: any; // TODO what type is this??
-    onSignup: (user: UserDTO) => void;
+    onAddMeal: (user: UserDTO) => void;
 }
 
-const AddUserForm = (props: IAddUserProps) => {
+const AddMealForm = (props: IAddMealProps) => {
     const { userStore } = useStore();
 
     const onUsernameInputChange = (
@@ -23,7 +23,7 @@ const AddUserForm = (props: IAddUserProps) => {
         <Form
             name="signup"
             form={props.form}
-            onFinish={props.onSignup}
+            onFinish={props.onAddMeal}
             labelCol={{ span: 5 }}
             wrapperCol={{ span: 16 }}
         >
@@ -52,4 +52,4 @@ const AddUserForm = (props: IAddUserProps) => {
     );
 };
 
-export default observer(AddUserForm);
+export default observer(AddMealForm);
