@@ -19,10 +19,6 @@ const AddUserForm = (props: IAddUserProps) => {
         userStore.setUsernameInput(event.target.value);
     };
 
-    const onShareInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        userStore.setShareInput(event.target.value);
-    };
-
     return (
         <Form
             name="signup"
@@ -50,17 +46,6 @@ const AddUserForm = (props: IAddUserProps) => {
                     value={userStore.usernameInput}
                     onChange={onUsernameInputChange}
                     prefix={<UserAddOutlined style={{ color: "grey" }} />}
-                />
-            </Form.Item>
-            <Form.Item name="share" label="Share">
-                <Input
-                    name="share"
-                    size="large"
-                    placeholder="Share with (comma separated)"
-                    allowClear={true}
-                    value={userStore.shareInput}
-                    onChange={onShareInputChange}
-                    prefix={<UsergroupAddOutlined style={{ color: "grey" }} />}
                 />
             </Form.Item>
         </Form>

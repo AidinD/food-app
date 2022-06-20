@@ -5,7 +5,6 @@ import { UiStore } from "./UiStore";
 import configData from "../Config/config.json";
 import { ResponseJson } from "../Types/Shared";
 import { showNotification } from "../Utils/Notification";
-import { stringify } from "querystring";
 
 export class UserStore {
     rootStore: RootStore;
@@ -13,7 +12,6 @@ export class UserStore {
 
     currentUser: User | undefined = undefined;
     usernameInput: string = "";
-    shareInput: string = "";
 
     constructor(rootStore: RootStore) {
         this.rootStore = rootStore;
@@ -25,13 +23,11 @@ export class UserStore {
             // Observables
             usernameInput: observable,
             currentUser: observable,
-            shareInput: observable,
 
             // Computed
 
             // Actions
             setCurrentUser: action,
-            setShareInput: action,
             saveCurrentUserToLocalStorage: action,
             setUsernameInput: action,
             isLoggedIn: action,
@@ -41,10 +37,6 @@ export class UserStore {
 
     setUsernameInput(userInput: string) {
         this.usernameInput = userInput;
-    }
-
-    setShareInput(shareInput: string) {
-        this.shareInput = shareInput;
     }
 
     startLoginFlow = async (name: string) => {
@@ -102,17 +94,15 @@ export class UserStore {
 
     login = (user: User) => {
         this.setCurrentUser(user);
-        this.saveCurrentUserToLocalStorage();
+        this.saveCurrentUserToLocalStorage(user);
     };
 
     setCurrentUser = (user: User | undefined) => {
         this.currentUser = user;
     };
 
-    saveCurrentUserToLocalStorage = () => {
-        if (this.currentUser) {
-            localStorage.setItem("user", JSON.stringify(this.currentUser));
-        }
+    saveCurrentUserToLocalStorage = (user: User) => {
+        localStorage.setItem("user", JSON.stringify(user));
     };
 
     getUserFromLocalStorage = () => {
