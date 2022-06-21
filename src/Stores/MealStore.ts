@@ -18,10 +18,7 @@ export class MealStore {
 
             // Actions
             addMeal: action,
-            addFakeMeals: action,
         });
-
-        this.addFakeMeals();
     }
 
     get allMeals() {
@@ -30,45 +27,5 @@ export class MealStore {
 
     addMeal = (meal: Meal) => {
         this.meals.push(meal);
-    };
-
-    addFakeMeals = () => {
-        this.addMeal({
-            id: 1,
-            name: "Meal 1",
-            description: "Description 1",
-            tags: [
-                {
-                    id: 1,
-                    name: "Tag 1",
-                },
-            ],
-            recipe: {
-                id: 1,
-                ingredients: [],
-                description: "Description 1",
-            },
-            lastMade: new Date(),
-            image: "image",
-        });
-
-        this.addMeal({
-            id: 2,
-            name: "Meal 2",
-            description: "Description 2",
-            tags: [
-                {
-                    id: 2,
-                    name: "Tag 2",
-                },
-            ],
-            recipe: {
-                id: 2,
-                ingredients: [],
-                description: "Description 2",
-            },
-            lastMade: new Date(),
-            image: "image",
-        });
     };
 }

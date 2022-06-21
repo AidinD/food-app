@@ -44,13 +44,14 @@ const MealOverviewPage = (props: IMealOverviewProps) => {
                 />
             </div>
             <Modal
-                title="Sign up"
+                title="Add meal"
                 visible={uiStore.showAddMealModal}
                 onOk={form.submit}
                 onCancel={() => {
+                    form.resetFields();
                     uiStore.setShowAddMealModal(false);
                 }}
-                okText="Sign up"
+                okText="Add"
             >
                 <AddMealForm form={form} onAddMeal={() => {}} />
             </Modal>
