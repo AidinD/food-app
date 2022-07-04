@@ -3,13 +3,13 @@ import { observer } from "mobx-react-lite";
 import { Meal } from "../Types/Meal";
 import { useEffect } from "react";
 import { useStore } from "../Stores/StoreProvider";
-import "./MealOverviewPage.scss";
+import "./MealsPage.scss";
 import { PlusOutlined } from "@ant-design/icons";
 import AddMealForm from "../Components/AddMealForm";
 
 interface IMealOverviewProps {}
 
-const MealOverviewPage = (props: IMealOverviewProps) => {
+const MealsPage = (props: IMealOverviewProps) => {
     const { uiStore } = useStore();
     const { mealStore } = useStore();
     const [form] = Form.useForm();
@@ -59,4 +59,4 @@ const MealOverviewPage = (props: IMealOverviewProps) => {
     );
 };
 
-export default observer(MealOverviewPage);
+export default observer(MealsPage);
