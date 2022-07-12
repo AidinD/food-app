@@ -4,7 +4,7 @@ import * as React from "react";
 import { useStore } from "../Stores/StoreProvider";
 import { UserOutlined } from "@ant-design/icons";
 import { useEffect } from "react";
-import "./LoginPage.scss";
+import "./LoginPage.module.scss";
 import AddUserForm from "../Components/AddUserForm";
 import { UserDTO } from "../Types/User";
 

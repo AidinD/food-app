@@ -14,8 +14,8 @@ export const routes = [
         pattern: "/",
     },
     {
-        name: "mealOverview",
-        pattern: "/mealoverview/",
+        name: "mealsPage",
+        pattern: "/mealspage/",
     },
     {
         name: "meal",

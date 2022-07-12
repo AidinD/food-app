@@ -1,0 +1,15 @@
+@import "../Themes/variables.scss";
+
+@media (max-width: $breakpoint-tablet) {
+    .floating-button {
+        bottom: 33px;
+        right: 33px;
+    }
+}
+
+@media (max-width: $breakpoint-phone) {
+    .floating-button {
+        bottom: 33px;
+        right: 33px;
+    }
+}

@@ -1,0 +1,30 @@
+.ant-card {
+    width: 200px;
+}
+
+.tags-container {
+    padding-top: 10px;
+    // text-align: left;
+}
+
+.ant-card .ant-tag {
+    margin: 2px;
+}
+
+.ant-card-actions > li {
+    margin: 0;
+}
+
+.ant-card-actions .action-button {
+    border: none;
+    background-color: transparent;
+    color: inherit;
+    box-shadow: none;
+    padding: 10px 0;
+    width: 100%;
+    height: 100%;
+}
+
+.ant-empty-image {
+    margin: 10px 0;
+}

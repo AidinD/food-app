@@ -1,6 +1,6 @@
 import { UserStore } from "./UserStore";
 import { MealStore } from "./MealStore";
-import { RouterStoreWrapper } from "./RouterStoreWrapper";
+import { RouterStoreWrapper } from "../Routing/RouterStoreWrapper";
 import { UiStore } from "./UiStore";
 import { configure } from "mobx";
 

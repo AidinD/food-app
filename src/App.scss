@@ -1,17 +1,44 @@
 @import "~antd/dist/antd.css";
-@import "./index.scss";
+@import "./Themes/variables.scss";
 
 body {
-    background-color: $base-color;
+    background-color: $base-color-primary;
 }
 
 .App {
     text-align: center;
 }
 
-.container {
+.site-page-header span {
+    color: white;
+}
+
+.ant-form-item-explain-error {
+    color: black;
+}
+
+.ant-modal-header {
+    background-color: $base-color-primary;
+}
+
+.ant-modal-footer {
+    background-color: $base-color-accent;
+}
+
+.ant-row {
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+}
+
+.floating-button {
     position: fixed;
-    top: 40%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: flex-end;
+    flex-direction: row-reverse;
+    bottom: 33px;
+    right: 33px;
+}
+
+.floating-button .ant-btn {
+    background-color: $base-color-secondary;
 }

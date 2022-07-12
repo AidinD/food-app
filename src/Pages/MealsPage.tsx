@@ -1,15 +1,16 @@
-import { Button, Form, Modal, PageHeader, Row } from "antd";
+import { Button, Col, Form, Modal, PageHeader, Row } from "antd";
 import { observer } from "mobx-react-lite";
 import { Meal } from "../Types/Meal";
 import { useEffect } from "react";
 import { useStore } from "../Stores/StoreProvider";
-import "./MealsPage.scss";
+import "./MealsPage.module.scss";
 import { PlusOutlined } from "@ant-design/icons";
 import AddMealForm from "../Components/AddMealForm";
+import MealRow from "../Components/MealRow";
 
-interface IMealOverviewProps {}
+interface IMealPageProps {}
 
-const MealsPage = (props: IMealOverviewProps) => {
+const MealsPage = (props: IMealPageProps) => {
     const { uiStore } = useStore();
     const { mealStore } = useStore();
     const [form] = Form.useForm();
@@ -18,23 +19,29 @@ const MealsPage = (props: IMealOverviewProps) => {
 
     const mealList = () => {
         return mealStore.allMeals.map((meal: Meal) => {
-            return <div key={meal.id}>{meal.name}</div>;
+            return (
+                <Col className="meal-item" key={meal.id}>
+                    <MealRow meal={meal} />
+                </Col>
+            );
         });
     };
 
     return (
         <>
             <div className="container">
-                <Row className="title-row">
+                <Row className="title-row" justify="center">
                     <PageHeader
                         className="site-page-header"
                         backIcon={false}
                         title="Meal Overview"
                     />
                 </Row>
-                {mealList()}
+                <Row gutter={[16, 16]} justify="center">
+                    {mealList()}
+                </Row>
             </div>
-            <div className="bottom-container">
+            <div className="floating-button">
                 <Button
                     type="primary"
                     shape="circle"

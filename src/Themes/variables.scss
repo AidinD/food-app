@@ -1,0 +1,16 @@
+$base-color-primary: #00ac5c;
+$base-color-accent: #45b27f;
+$base-color-secondary: #c06fa5;
+
+$breakpoint-phone: 320px;
+$breakpoint-tablet: 768px;
+$breakpoint-desktop: 1024px;
+
+:export {
+    primaryColor: $base-color-primary;
+    accentColor: $base-color-accent;
+    secondaryColor: $base-color-secondary;
+    breakpointPhone: $breakpoint-phone;
+    breakpointTablet: $breakpoint-tablet;
+    breakpointDesktop: $breakpoint-desktop;
+}

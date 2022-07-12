@@ -1,6 +1,6 @@
 import { makeAutoObservable } from "mobx";
 import { useRouterStore } from "mobx-state-router";
-import RootStore from "./RootStore";
+import RootStore from "../Stores/RootStore";
 
 export class RouterStoreWrapper {
     rootStore: RootStore;
@@ -20,7 +20,7 @@ export class RouterStoreWrapper {
         this.routerStore.goTo("home", options);
     }
 
-    goToMealOverview(options?: { [key: string]: any }) {
-        this.routerStore.goTo("mealOverview", options);
+    goToMealsPage(options?: { [key: string]: any }) {
+        this.routerStore.goTo("mealsPage", options);
     }
 }

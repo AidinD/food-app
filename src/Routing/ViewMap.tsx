@@ -4,6 +4,6 @@ import MealsPage from "../Pages/MealsPage";
 
 export const viewMap = {
     home: <LoginPage />,
-    mealOverview: <MealsPage />,
+    mealsPage: <MealsPage />,
     //notFound: <NotFoundPage />,
 };

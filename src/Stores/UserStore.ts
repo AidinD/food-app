@@ -55,7 +55,7 @@ export class UserStore {
             const dataJson: ResponseJson = await response.json();
             if (dataJson.status === 200) {
                 this.login(dataJson.data as User);
-                this.rootStore.routerStore.goToMealOverview();
+                this.rootStore.routerStore.goToMealsPage();
             } else if (dataJson.status === 204) {
                 throw new Error("User does not exist");
             }
