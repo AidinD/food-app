@@ -31,7 +31,7 @@ export class MealStore {
                     { id: 3, name: "Tag 3", color: "green" },
                 ],
                 recipe: "Recipe 1",
-                image: "https://loremflickr.com/320/240/food",
+                image: i === 3 ? "https://loremflickr.com/320/240/food" : "",
                 lastMade: new Date(),
             });
         }
