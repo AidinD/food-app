@@ -4,7 +4,7 @@ import * as React from "react";
 import { useStore } from "../Stores/StoreProvider";
 import { UserOutlined } from "@ant-design/icons";
 import { useEffect } from "react";
-import "./LoginPage.module.scss";
+import styles from "./LoginPage.module.scss";
 import AddUserForm from "../Components/AddUserForm";
 import { UserDTO } from "../Types/User";
 
@@ -33,7 +33,7 @@ const LoginPage = (props: IAppProps) => {
 
     // TODO implement onFinishFailed on all forms
     return (
-        <div className="container">
+        <div className={styles.container}>
             <Row justify="center" align="middle" className="title-row">
                 <PageHeader
                     className="site-page-header"

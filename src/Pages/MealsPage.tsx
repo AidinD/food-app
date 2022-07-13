@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 import { Meal } from "../Types/Meal";
 import { useEffect } from "react";
 import { useStore } from "../Stores/StoreProvider";
-import "./MealsPage.module.scss";
+import styles from "./MealsPage.module.scss";
 import { PlusOutlined } from "@ant-design/icons";
 import AddMealForm from "../Components/AddMealForm";
 import MealRow from "../Components/MealRow";
@@ -29,7 +29,7 @@ const MealsPage = (props: IMealPageProps) => {
 
     return (
         <>
-            <div className="container">
+            <div className={styles.container}>
                 <Row className="title-row" justify="center">
                     <PageHeader
                         className="site-page-header"
