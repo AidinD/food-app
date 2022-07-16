@@ -33,6 +33,7 @@ const MealRow = (props: IMealRowProps) => {
             <Card
                 className="meal-card"
                 size="small"
+                hoverable
                 cover={
                     props.meal.image.length > 0 ? (
                         <img alt="example" src={props.meal.image} />
