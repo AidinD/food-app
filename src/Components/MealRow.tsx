@@ -34,7 +34,7 @@ const MealRow = (props: IMealRowProps) => {
                 hoverable
                 cover={
                     props.meal.image ? (
-                        <img alt="example" src={props.meal.image} />
+                        <img alt="meal thumbnail" src={props.meal.image} />
                     ) : (
                         <Empty description={false} />
                     )

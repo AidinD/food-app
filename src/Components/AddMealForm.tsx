@@ -1,9 +1,9 @@
-import { Form, Input, Select } from "antd";
+import { Form, Input, Rate, Select } from "antd";
 import React from "react";
 import { useStore } from "../Stores/StoreProvider";
 import { UserDTO } from "../Types/User";
 import TextArea from "antd/lib/input/TextArea";
-import { MealDTO } from "../Types/Meal";
+import { Meal } from "../Types/Meal";
 
 interface IAddMealProps {
     form: any; // TODO what type is this??
@@ -13,7 +13,8 @@ interface IAddMealProps {
 const AddMealForm = (props: IAddMealProps) => {
     const { mealStore } = useStore();
 
-    const onAddMeal = (values: MealDTO) => {
+    const onAddMeal = (values: Meal) => {
+        mealStore.addMeal(values);
         console.log("add meal values: ", values);
 
         //TODO add meal to database
@@ -41,7 +42,7 @@ const AddMealForm = (props: IAddMealProps) => {
             wrapperCol={{ span: 16 }}
         >
             <Form.Item
-                name="mealname"
+                name="name"
                 label="Name"
                 rules={[
                     {
@@ -50,11 +51,7 @@ const AddMealForm = (props: IAddMealProps) => {
                     },
                 ]}
             >
-                <Input
-                    name="mealname"
-                    placeholder="Meal name"
-                    allowClear={true}
-                />
+                <Input name="name" placeholder="Meal name" allowClear={true} />
             </Form.Item>
             <Form.Item name="description" label="Description">
                 <TextArea
@@ -63,19 +60,18 @@ const AddMealForm = (props: IAddMealProps) => {
                     allowClear={true}
                 />
             </Form.Item>
-            <Form.Item name="recipeurl" label="Recipe URL">
+            <Form.Item name="rating" label="Rating">
+                <Rate allowHalf={true} />
+            </Form.Item>
+            <Form.Item name="recipe" label="Recipe URL">
                 <Input
-                    name="recipeurl"
+                    name="recipe"
                     placeholder="Recipe URL"
                     allowClear={true}
                 />
             </Form.Item>
-            <Form.Item name="imageurl" label="Image URL">
-                <Input
-                    name="imageurl"
-                    placeholder="Image URL"
-                    allowClear={true}
-                />
+            <Form.Item name="image" label="Image URL">
+                <Input name="image" placeholder="Image URL" allowClear={true} />
             </Form.Item>
             <Form.Item name="tags" label="Tags">
                 <Select

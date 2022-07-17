@@ -6,14 +6,17 @@ export type Meal = {
     recipe: string;
     lastMade: Date;
     image: string;
+    rating: number;
 };
 
 export type MealDTO = {
     name: string;
     description: string;
-    tags: string[];
-    recipe: string;
-    image: string;
+    rating: number;
+    tags: string;
+    online_url: string;
+    image_url: string;
+    user: number;
 };
 
 export type MealResponse = {

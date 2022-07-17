@@ -5,17 +5,23 @@ import { UiStore } from "./UiStore";
 import configData from "../Config/config.json";
 import { ResponseJson } from "../Types/Shared";
 import { showNotification } from "../Utils/Notification";
-import { MapFromMealResponseToMeal } from "../Types/MealMapper";
+import {
+    MapFromMealResponseToMeal,
+    MapFromMealToMealDTO,
+} from "../Types/MealMapper";
+import { UserStore } from "./UserStore";
 
 export class MealStore {
     rootStore: RootStore;
     uiStore: UiStore;
+    userStore: UserStore;
 
     meals: Meal[] = [];
 
     constructor(rootStore: RootStore) {
         this.rootStore = rootStore;
         this.uiStore = rootStore.uiStore;
+        this.userStore = rootStore.userStore;
 
         makeAutoObservable(this, {
             // Observables
@@ -33,10 +39,6 @@ export class MealStore {
     get allMeals() {
         return this.meals;
     }
-
-    addMeal = (meal: Meal) => {
-        this.meals.push(meal);
-    };
 
     loadMeals = async () => {
         this.uiStore.setIsLoading(true);
@@ -61,6 +63,44 @@ export class MealStore {
             showNotification(error.toString(), "", "error", 0);
         } finally {
             this.uiStore.setIsLoading(false);
+        }
+    };
+
+    addMeal = async (meal: Meal) => {
+        const requestOptions = {
+            method: "PUT",
+            body: JSON.stringify(
+                MapFromMealToMealDTO(meal, this.userStore.currentUser!.id)
+            ),
+            headers: { "Content-Type": "application/json" },
+        };
+
+        console.log("meal", meal);
+        console.log(
+            "body",
+            MapFromMealToMealDTO(meal, this.userStore.currentUser!.id)
+        );
+
+        try {
+            const response = await fetch(
+                configData.SERVER_URL + "meal",
+                requestOptions
+            );
+            const dataJson: ResponseJson = await response.json();
+            if (response.status === 200) {
+                showNotification(
+                    "Success",
+                    "Meal was successfully added",
+                    "success",
+                    3
+                );
+            } else throw new Error(dataJson.data.message);
+        } catch (error: any) {
+            showNotification(error.toString(), "", "error", 0);
+        } finally {
+            this.uiStore.setShowAddMealModal(false);
+            this.uiStore.setIsLoading(false);
+            this.loadMeals();
         }
     };
 }
