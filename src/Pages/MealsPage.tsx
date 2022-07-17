@@ -15,7 +15,9 @@ const MealsPage = (props: IMealPageProps) => {
     const { mealStore } = useStore();
     const [form] = Form.useForm();
 
-    useEffect(() => {}, []);
+    useEffect(() => {
+        mealStore.loadMeals();
+    }, []);
 
     const mealList = () => {
         return mealStore.allMeals.map((meal: Meal) => {

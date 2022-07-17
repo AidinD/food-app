@@ -2,7 +2,7 @@ export type Meal = {
     id: number;
     name: string;
     description: string;
-    tags: Tag[];
+    tags: string;
     recipe: string;
     lastMade: Date;
     image: string;
@@ -14,6 +14,21 @@ export type MealDTO = {
     tags: string[];
     recipe: string;
     image: string;
+};
+
+export type MealResponse = {
+    id: number;
+    name: string;
+    description: string;
+    tags: string;
+    online_url: string;
+    image_url: string;
+    ranking: number;
+    times_made: number;
+    last_made: Date;
+    user: number;
+    updated_at: Date;
+    created_at: Date;
 };
 
 export type Tag = {

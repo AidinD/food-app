@@ -1,6 +1,4 @@
 import { Button, Card, Empty, Tag } from "antd";
-import Avatar from "antd/lib/avatar/avatar";
-import React, { useEffect } from "react";
 import { Meal, Tag as MealTag } from "../Types/Meal";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import "./MealRow.scss";
@@ -18,11 +16,11 @@ const MealRow = (props: IMealRowProps) => {
             <div>
                 <div>{props.meal.description}</div>
                 <div className="tags-container">
-                    {props.meal.tags.map((tag: MealTag) => (
+                    {/* {props.meal.tags.map((tag: MealTag) => (
                         <Tag key={tag.id} color={tag.color}>
                             {tag.name}
                         </Tag>
-                    ))}
+                    ))} */}
                 </div>
             </div>
         );
@@ -35,7 +33,7 @@ const MealRow = (props: IMealRowProps) => {
                 size="small"
                 hoverable
                 cover={
-                    props.meal.image.length > 0 ? (
+                    props.meal.image ? (
                         <img alt="example" src={props.meal.image} />
                     ) : (
                         <Empty description={false} />

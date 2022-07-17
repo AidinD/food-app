@@ -1,13 +1,21 @@
 import { makeAutoObservable, observable, computed, action } from "mobx";
-import { Meal } from "../Types/Meal";
+import { Meal, MealResponse } from "../Types/Meal";
 import RootStore from "./RootStore";
+import { UiStore } from "./UiStore";
+import configData from "../Config/config.json";
+import { ResponseJson } from "../Types/Shared";
+import { showNotification } from "../Utils/Notification";
+import { MapFromMealResponseToMeal } from "../Types/MealMapper";
 
 export class MealStore {
     rootStore: RootStore;
+    uiStore: UiStore;
+
     meals: Meal[] = [];
 
     constructor(rootStore: RootStore) {
         this.rootStore = rootStore;
+        this.uiStore = rootStore.uiStore;
 
         makeAutoObservable(this, {
             // Observables
@@ -18,23 +26,8 @@ export class MealStore {
 
             // Actions
             addMeal: action,
+            loadMeals: action,
         });
-
-        for (let i = 0; i < 10; i++) {
-            this.addMeal({
-                id: i,
-                name: "Meal" + i,
-                description: "Description" + i,
-                tags: [
-                    { id: 1, name: "Tag 1", color: "red" },
-                    { id: 2, name: "Tag 2", color: "blue" },
-                    { id: 3, name: "Tag 3", color: "green" },
-                ],
-                recipe: "Recipe 1",
-                image: i === 3 ? "https://loremflickr.com/320/340/food" : "",
-                lastMade: new Date(),
-            });
-        }
     }
 
     get allMeals() {
@@ -43,5 +36,31 @@ export class MealStore {
 
     addMeal = (meal: Meal) => {
         this.meals.push(meal);
+    };
+
+    loadMeals = async () => {
+        this.uiStore.setIsLoading(true);
+
+        const requestOptions = {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+        };
+
+        try {
+            const response = await fetch(
+                configData.SERVER_URL + "meals",
+                requestOptions
+            );
+            const dataJson: ResponseJson = await response.json();
+            if (response.status === 200) {
+                this.meals = (dataJson.data as MealResponse[]).map(
+                    (mealResponse) => MapFromMealResponseToMeal(mealResponse)
+                );
+            } else throw new Error(dataJson.data.message);
+        } catch (error: any) {
+            showNotification(error.toString(), "", "error", 0);
+        } finally {
+            this.uiStore.setIsLoading(false);
+        }
     };
 }
