@@ -92,7 +92,7 @@ export class MealStore {
         }
     };
 
-    addMeal = async (meal: Meal) => {
+    addMeal = async (meal: Meal): Promise<boolean> => {
         const requestOptions = {
             method: "PUT",
             body: JSON.stringify(
@@ -114,11 +114,13 @@ export class MealStore {
                     "success",
                     3
                 );
+                this.uiStore.setShowAddMealModal(false);
+                return Promise.resolve(true);
             } else throw new Error(dataJson.data.message);
         } catch (error: any) {
             showNotification(error.toString(), "", "error", 0);
+            return Promise.resolve(false);
         } finally {
-            this.uiStore.setShowAddMealModal(false);
             this.uiStore.setIsLoading(false);
             this.loadMeals();
         }

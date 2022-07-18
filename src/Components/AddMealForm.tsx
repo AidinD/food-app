@@ -13,8 +13,10 @@ interface IAddMealProps {
 const AddMealForm = (props: IAddMealProps) => {
     const { mealStore } = useStore();
 
-    const onAddMeal = (values: Meal) => {
-        mealStore.addMeal(values);
+    const onAddMeal = async (values: Meal) => {
+        if (await mealStore.addMeal(values)) {
+            props.form.resetFields();
+        }
     };
 
     const getTagsFromStore = () => {
