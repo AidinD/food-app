@@ -15,10 +15,6 @@ const AddMealForm = (props: IAddMealProps) => {
 
     const onAddMeal = (values: Meal) => {
         mealStore.addMeal(values);
-        console.log("add meal values: ", values);
-
-        //TODO add meal to database
-        //TODO add new tags to database
     };
 
     const getTagsFromStore = () => {
