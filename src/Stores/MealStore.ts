@@ -1,4 +1,10 @@
-import { makeAutoObservable, observable, computed, action } from "mobx";
+import {
+    makeAutoObservable,
+    observable,
+    computed,
+    action,
+    runInAction,
+} from "mobx";
 import { Meal, MealResponse } from "../Types/Meal";
 import RootStore from "./RootStore";
 import { UiStore } from "./UiStore";
@@ -17,6 +23,7 @@ export class MealStore {
     userStore: UserStore;
 
     meals: Meal[] = [];
+    mealsFiltered: Meal[] = [];
 
     constructor(rootStore: RootStore) {
         this.rootStore = rootStore;
@@ -26,11 +33,12 @@ export class MealStore {
         makeAutoObservable(this, {
             // Observables
             meals: observable,
+            mealsFiltered: observable,
 
             // Computed
-            allMeals: computed,
 
             // Actions
+            textFilterMeals: action,
             addMeal: action,
             loadMeals: action,
         });
@@ -39,6 +47,18 @@ export class MealStore {
     get allMeals() {
         return this.meals;
     }
+
+    get filteredMeals() {
+        return this.mealsFiltered;
+    }
+
+    textFilterMeals = (filter: string) => {
+        this.mealsFiltered = [
+            ...this.meals.filter((meal) => {
+                return meal.name.toLowerCase().includes(filter.toLowerCase());
+            }),
+        ];
+    };
 
     loadMeals = async () => {
         this.uiStore.setIsLoading(true);
@@ -55,14 +75,20 @@ export class MealStore {
             );
             const dataJson: ResponseJson = await response.json();
             if (response.status === 200) {
-                this.meals = (dataJson.data as MealResponse[]).map(
-                    (mealResponse) => MapFromMealResponseToMeal(mealResponse)
-                );
+                runInAction(() => {
+                    this.meals = (dataJson.data as MealResponse[]).map(
+                        (mealResponse) =>
+                            MapFromMealResponseToMeal(mealResponse)
+                    );
+                });
             } else throw new Error(dataJson.data.message);
         } catch (error: any) {
             showNotification(error.toString(), "", "error", 0);
         } finally {
             this.uiStore.setIsLoading(false);
+            runInAction(() => {
+                this.mealsFiltered = [...this.meals];
+            });
         }
     };
 
@@ -74,12 +100,6 @@ export class MealStore {
             ),
             headers: { "Content-Type": "application/json" },
         };
-
-        console.log("meal", meal);
-        console.log(
-            "body",
-            MapFromMealToMealDTO(meal, this.userStore.currentUser!.id)
-        );
 
         try {
             const response = await fetch(
