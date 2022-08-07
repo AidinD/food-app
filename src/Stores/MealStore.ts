@@ -38,7 +38,7 @@ export class MealStore {
             // Computed
 
             // Actions
-            textFilterMeals: action,
+            setFilteredMeals: action,
             addMeal: action,
             loadMeals: action,
         });
@@ -52,12 +52,16 @@ export class MealStore {
         return this.mealsFiltered;
     }
 
+    setFilteredMeals = (meals: Meal[]) => {
+        this.mealsFiltered = meals.sort((a, b) => a.name.localeCompare(b.name));
+    };
+
     textFilterMeals = (filter: string) => {
-        this.mealsFiltered = [
+        this.setFilteredMeals([
             ...this.meals.filter((meal) => {
                 return meal.name.toLowerCase().includes(filter.toLowerCase());
             }),
-        ];
+        ]);
     };
 
     loadMeals = async () => {
@@ -86,9 +90,7 @@ export class MealStore {
             showNotification(error.toString(), "", "error", 0);
         } finally {
             this.uiStore.setIsLoading(false);
-            runInAction(() => {
-                this.mealsFiltered = [...this.meals];
-            });
+            this.setFilteredMeals([...this.meals]);
         }
     };
 
