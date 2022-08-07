@@ -16,11 +16,11 @@ const MealRow = (props: IMealRowProps) => {
             <div>
                 <div>{props.meal.description}</div>
                 <div className="tags-container">
-                    {/* {props.meal.tags.map((tag: MealTag) => (
+                    {props.meal.tags.map((tag: MealTag) => (
                         <Tag key={tag.id} color={tag.color}>
                             {tag.name}
                         </Tag>
-                    ))} */}
+                    ))}
                 </div>
             </div>
         );
