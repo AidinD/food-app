@@ -1,11 +1,5 @@
-import {
-    makeAutoObservable,
-    observable,
-    computed,
-    action,
-    runInAction,
-} from "mobx";
-import { Meal, MealResponse } from "../Types/Meal";
+import { makeAutoObservable, observable, action, runInAction } from "mobx";
+import { Meal, MealResponse, Tag } from "../Types/Meal";
 import RootStore from "./RootStore";
 import { UiStore } from "./UiStore";
 import configData from "../Config/config.json";
@@ -24,6 +18,10 @@ export class MealStore {
 
     meals: Meal[] = [];
     mealsFiltered: Meal[] = [];
+    tags: Tag[] = [];
+
+    textFilter: string = "";
+    tagFilter: number[] = [];
 
     constructor(rootStore: RootStore) {
         this.rootStore = rootStore;
@@ -34,13 +32,19 @@ export class MealStore {
             // Observables
             meals: observable,
             mealsFiltered: observable,
+            tags: observable,
+            textFilter: observable,
+            tagFilter: observable,
 
             // Computed
 
             // Actions
             setFilteredMeals: action,
+            setTags: action,
             addMeal: action,
             loadMeals: action,
+            loadTags: action,
+            setTextFilter: action,
         });
     }
 
@@ -56,12 +60,32 @@ export class MealStore {
         this.mealsFiltered = meals.sort((a, b) => a.name.localeCompare(b.name));
     };
 
-    textFilterMeals = (filter: string) => {
-        this.setFilteredMeals([
-            ...this.meals.filter((meal) => {
-                return meal.name.toLowerCase().includes(filter.toLowerCase());
-            }),
-        ]);
+    setTags = (tags: Tag[]) => {
+        this.tags = tags;
+    };
+
+    setTextFilter = (text: string) => {
+        this.textFilter = text;
+    };
+
+    setTagFilter = (tagIds: number[]) => {
+        this.tagFilter = tagIds;
+    };
+
+    filterMeals = () => {
+        const tagFilterMeals: Meal[] = this.meals.filter((meal) => {
+            return this.tagFilter.every((tagId) => {
+                return meal.tags.some((tag) => tag.id === tagId);
+            });
+        });
+
+        const textFilterMeals = tagFilterMeals.filter((meal) => {
+            return meal.name
+                .toLowerCase()
+                .includes(this.textFilter.toLowerCase());
+        });
+
+        this.setFilteredMeals([...textFilterMeals]);
     };
 
     loadMeals = async () => {
@@ -91,6 +115,30 @@ export class MealStore {
         } finally {
             this.uiStore.setIsLoading(false);
             this.setFilteredMeals([...this.meals]);
+        }
+    };
+
+    loadTags = async () => {
+        this.uiStore.setIsLoading(true);
+
+        const requestOptions = {
+            method: "GET",
+            headers: { "Content-Type": "application/json" },
+        };
+
+        try {
+            const response = await fetch(
+                configData.SERVER_URL + "tags",
+                requestOptions
+            );
+            const dataJson: ResponseJson = await response.json();
+            if (response.status === 200) {
+                this.setTags(dataJson.data as Tag[]);
+            } else throw new Error(dataJson.data.message);
+        } catch (error: any) {
+            showNotification(error.toString(), "", "error", 0);
+        } finally {
+            this.uiStore.setIsLoading(false);
         }
     };
 

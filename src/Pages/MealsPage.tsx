@@ -7,9 +7,11 @@ import {
     Modal,
     PageHeader,
     Row,
+    Select,
+    Tag as TagAnt,
 } from "antd";
 import { observer } from "mobx-react-lite";
-import { Meal } from "../Types/Meal";
+import { Meal, Tag } from "../Types/Meal";
 import { useEffect } from "react";
 import { useStore } from "../Stores/StoreProvider";
 import styles from "./MealsPage.module.scss";
@@ -17,6 +19,7 @@ import { PlusOutlined } from "@ant-design/icons";
 import AddMealForm from "../Components/AddMealForm";
 import MealRow from "../Components/MealRow";
 import { SearchOutlined } from "@ant-design/icons";
+import type { CustomTagProps } from "rc-select/lib/BaseSelect";
 
 interface IMealPageProps {}
 
@@ -26,8 +29,9 @@ const MealsPage = (props: IMealPageProps) => {
     const [form] = Form.useForm();
 
     useEffect(() => {
+        mealStore.loadTags();
         mealStore.loadMeals();
-    }, []);
+    });
 
     const mealList = () => {
         return mealStore.filteredMeals.map((meal: Meal) => {
@@ -39,9 +43,35 @@ const MealsPage = (props: IMealPageProps) => {
         });
     };
 
-    const handleSearch = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleTextFilter = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
-        mealStore.textFilterMeals(value);
+        mealStore.setTextFilter(value);
+        mealStore.filterMeals();
+    };
+
+    const handleTagFilter = (value: any) => {
+        mealStore.setTagFilter(value);
+        mealStore.filterMeals();
+    };
+
+    const tagRender = (props: CustomTagProps) => {
+        const { label, value, closable, onClose } = props;
+        const onPreventMouseDown = (e: React.MouseEvent<HTMLElement>) => {
+            e.preventDefault();
+            e.stopPropagation();
+        };
+
+        return (
+            <TagAnt
+                closable={closable}
+                onClose={onClose}
+                onMouseDown={onPreventMouseDown}
+                color={value}
+                style={{ marginRight: "3px" }}
+            >
+                {label}
+            </TagAnt>
+        );
     };
 
     return (
@@ -63,8 +93,27 @@ const MealsPage = (props: IMealPageProps) => {
                             suffix={
                                 <SearchOutlined style={{ color: "grey" }} />
                             }
-                            onChange={handleSearch}
+                            onChange={handleTextFilter}
                         />
+                    </Col>
+                    <Col span={4}>
+                        <Select
+                            mode="multiple"
+                            maxTagCount="responsive"
+                            placeholder="Tag"
+                            allowClear
+                            style={{
+                                width: "100%",
+                                textAlign: "left",
+                            }}
+                            onChange={handleTagFilter}
+                            options={mealStore.tags.map((tag: Tag) => {
+                                return {
+                                    value: tag.id,
+                                    label: tag.name,
+                                };
+                            })}
+                        ></Select>
                     </Col>
                     <Divider />
                 </Row>
