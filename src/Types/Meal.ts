@@ -26,7 +26,7 @@ export type MealResponse = {
     tags: Tag[];
     online_url: string;
     image_url: string;
-    ranking: number;
+    rating: number;
     times_made: number;
     last_made: Date;
     user: number;

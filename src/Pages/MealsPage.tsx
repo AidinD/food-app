@@ -17,9 +17,11 @@ import { useStore } from "../Stores/StoreProvider";
 import styles from "./MealsPage.module.scss";
 import { PlusOutlined } from "@ant-design/icons";
 import AddMealForm from "../Components/AddMealForm";
-import MealRow from "../Components/MealRow";
+import MealItemCard from "../Components/MealItemCard";
 import { SearchOutlined } from "@ant-design/icons";
 import type { CustomTagProps } from "rc-select/lib/BaseSelect";
+import ViewMeal from "../Components/ViewMeal";
+import EditMealForm from "../Components/EditMealForm";
 
 interface IMealPageProps {}
 
@@ -31,13 +33,13 @@ const MealsPage = (props: IMealPageProps) => {
     useEffect(() => {
         mealStore.loadTags();
         mealStore.loadMeals();
-    });
+    }, []);
 
     const mealList = () => {
         return mealStore.filteredMeals.map((meal: Meal) => {
             return (
                 <Col className="meal-item" key={meal.id}>
-                    <MealRow meal={meal} />
+                    <MealItemCard meal={meal} />
                 </Col>
             );
         });
@@ -141,6 +143,26 @@ const MealsPage = (props: IMealPageProps) => {
                 okText="Add"
             >
                 <AddMealForm form={form} onAddMeal={() => {}} />
+            </Modal>
+            <Modal
+                visible={uiStore.showViewMealModal}
+                footer={false}
+                onOk={() => uiStore.setShowViewMealModal(false)}
+                onCancel={() => uiStore.setShowViewMealModal(false)}
+            >
+                <ViewMeal meal={mealStore.selectedMeal!} />
+            </Modal>
+            <Modal
+                title="Edit meal"
+                visible={uiStore.showEditMealModal}
+                onOk={() => uiStore.setShowEditMealModal(false)}
+                onCancel={() => uiStore.setShowEditMealModal(false)}
+            >
+                <EditMealForm
+                    form={form}
+                    meal={mealStore.selectedMeal!}
+                    onEditMeal={() => {}}
+                />
             </Modal>
         </>
     );

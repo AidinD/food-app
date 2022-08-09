@@ -18,6 +18,7 @@ export class MealStore {
 
     meals: Meal[] = [];
     mealsFiltered: Meal[] = [];
+    selectedMeal: Meal | undefined = undefined;
     tags: Tag[] = [];
 
     textFilter: string = "";
@@ -32,6 +33,7 @@ export class MealStore {
             // Observables
             meals: observable,
             mealsFiltered: observable,
+            selectedMeal: observable,
             tags: observable,
             textFilter: observable,
             tagFilter: observable,
@@ -40,6 +42,7 @@ export class MealStore {
 
             // Actions
             setFilteredMeals: action,
+            setSelectedMeal: action,
             setTags: action,
             addMeal: action,
             loadMeals: action,
@@ -58,6 +61,10 @@ export class MealStore {
 
     setFilteredMeals = (meals: Meal[]) => {
         this.mealsFiltered = meals.sort((a, b) => a.name.localeCompare(b.name));
+    };
+
+    setSelectedMeal = (meal: Meal | undefined) => {
+        this.selectedMeal = meal;
     };
 
     setTags = (tags: Tag[]) => {

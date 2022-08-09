@@ -9,7 +9,7 @@ export const MapFromMealResponseToMeal = (mealResponse: MealResponse): Meal => {
         recipe: mealResponse.online_url,
         image: mealResponse.image_url,
         lastMade: mealResponse.last_made,
-        rating: mealResponse.ranking,
+        rating: mealResponse.rating,
     };
 };
 

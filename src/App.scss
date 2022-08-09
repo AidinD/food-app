@@ -13,12 +13,24 @@ body {
     color: white;
 }
 
+h2.ant-typography {
+    font-size: 16px;
+}
+
+h3.ant-typography {
+    font-size: 12px;
+}
+
 .ant-form-item-explain-error {
     color: black;
 }
 
 .ant-modal-header {
     background-color: $base-color-primary;
+}
+
+.ant-modal-title {
+    color: white;
 }
 
 .ant-modal-footer {
