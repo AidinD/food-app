@@ -22,10 +22,6 @@ const EditMealForm = (props: IEditMealProps) => {
             return values.tag_values.map((tag) => tag.value).includes(tag.id);
         });
 
-        console.log("values", values);
-
-        console.log("tags", tags);
-
         const updatedMeal: Meal = {
             ...props.meal,
             ...values,

@@ -17,6 +17,10 @@ const AddMealForm = (props: IAddMealProps) => {
     }, [props.form, uiStore.showAddMealModal]); // Is this the best way?
 
     const onAddMeal = async (values: MealForm) => {
+        console.log("values", values);
+
+        values = { ...values };
+
         if (await mealStore.addMeal(values)) {
             props.form.resetFields();
         }
@@ -67,16 +71,15 @@ const AddMealForm = (props: IAddMealProps) => {
             <Form.Item name="image" label="Image URL">
                 <Input name="image" placeholder="Image URL" allowClear={true} />
             </Form.Item>
-            <Form.Item name="tag_ids" label="Tags">
-                <Select mode="tags" allowClear>
-                    {getTagsFromStore().map((tag: Tag) => {
-                        return (
-                            <Select.Option key={tag.id}>
-                                {tag.name}
-                            </Select.Option>
-                        );
+            <Form.Item name="tag_values" label="Tags">
+                <Select
+                    mode="multiple"
+                    allowClear
+                    labelInValue
+                    options={getTagsFromStore().map((tag: Tag) => {
+                        return { value: tag.id, label: tag.name };
                     })}
-                </Select>
+                ></Select>
             </Form.Item>
         </Form>
     );

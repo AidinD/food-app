@@ -1,4 +1,4 @@
-import { Button, Card, Empty, Rate, Tag } from "antd";
+import { Button, Card, Empty, Popconfirm, Rate, Tag } from "antd";
 import { Meal, Tag as MealTag } from "../Types/Meal";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import "./MealItemCard.scss";
@@ -35,23 +35,27 @@ const MealItemCard = (props: IMealRowProps) => {
         );
     };
 
+    const preventEventPropagation = (event?: React.MouseEvent<HTMLElement>) => {
+        if (event) {
+            event.preventDefault();
+            event.stopPropagation();
+        }
+    };
+
     const handleViewMealClick = (event: React.MouseEvent<HTMLElement>) => {
         mealStore.setSelectedMeal(props.meal);
         uiStore.setShowViewMealModal(true);
     };
 
     const handleEditMealClick = (event: React.MouseEvent<HTMLElement>) => {
-        event.preventDefault();
-        event.stopPropagation();
+        preventEventPropagation(event);
 
         mealStore.setSelectedMeal(props.meal);
         uiStore.setShowEditMealModal(true);
     };
 
-    const handleDeleteMealClick = (event: React.MouseEvent<HTMLElement>) => {
-        event.preventDefault();
-        event.stopPropagation();
-
+    const handleDeleteMealClick = (event?: React.MouseEvent<HTMLElement>) => {
+        preventEventPropagation(event);
         mealStore.deleteMeal(props.meal);
     };
 
@@ -76,12 +80,21 @@ const MealItemCard = (props: IMealRowProps) => {
                         icon={<EditOutlined />}
                         onClick={handleEditMealClick}
                     />,
-                    <Button
-                        className="action-button"
-                        size="large"
-                        icon={<DeleteOutlined />}
-                        onClick={handleDeleteMealClick}
-                    />,
+                    <Popconfirm
+                        title="Are you sure you want to delete this?"
+                        okText="Delete"
+                        cancelText="Cancel"
+                        placement="bottomLeft"
+                        onConfirm={handleDeleteMealClick}
+                        onCancel={preventEventPropagation}
+                    >
+                        <Button
+                            className="action-button"
+                            size="large"
+                            icon={<DeleteOutlined />}
+                            onClick={preventEventPropagation}
+                        />
+                    </Popconfirm>,
                 ]}
             >
                 <Meta
