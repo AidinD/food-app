@@ -84,6 +84,11 @@ export class MealStore {
         this.tagFilter = tagIds;
     };
 
+    clearFilters = () => {
+        this.setTextFilter("");
+        this.setTagFilter([]);
+    };
+
     filterMeals = () => {
         const tagFilterMeals: Meal[] = this.meals.filter((meal) => {
             return this.tagFilter.every((tagId) => {
@@ -126,7 +131,7 @@ export class MealStore {
             showNotification(error.toString(), "", "error", 0);
         } finally {
             this.uiStore.setIsLoading(false);
-            this.setFilteredMeals([...this.meals]);
+            this.filterMeals();
         }
     };
 

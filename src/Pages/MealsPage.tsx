@@ -8,7 +8,6 @@ import {
     PageHeader,
     Row,
     Select,
-    Tag as TagAnt,
 } from "antd";
 import { observer } from "mobx-react-lite";
 import { Meal, Tag } from "../Types/Meal";
@@ -19,7 +18,6 @@ import { PlusOutlined } from "@ant-design/icons";
 import AddMealForm from "../Components/AddMealForm";
 import MealItemCard from "../Components/MealItemCard";
 import { SearchOutlined } from "@ant-design/icons";
-import type { CustomTagProps } from "rc-select/lib/BaseSelect";
 import ViewMeal from "../Components/ViewMeal";
 import EditMealForm from "../Components/EditMealForm";
 
@@ -33,7 +31,7 @@ const MealsPage = (props: IMealPageProps) => {
     useEffect(() => {
         mealStore.loadTags();
         mealStore.loadMeals();
-    }, []);
+    }, [mealStore]);
 
     const mealList = () => {
         return mealStore.filteredMeals.map((meal: Meal) => {
@@ -66,9 +64,13 @@ const MealsPage = (props: IMealPageProps) => {
                         title="Meal Overview"
                     />
                 </Row>
-                <Row className={styles.searchBarRow} justify="center">
-                    <Divider />
-                    <Col span={4}>
+                <Divider />
+                <Row
+                    className={styles.searchBarRow}
+                    gutter={[16, 16]}
+                    justify="center"
+                >
+                    <Col flex="1 0 25%" className={styles.column}>
                         <Input
                             placeholder="Search"
                             allowClear
@@ -78,7 +80,7 @@ const MealsPage = (props: IMealPageProps) => {
                             onChange={handleTextFilter}
                         />
                     </Col>
-                    <Col span={4}>
+                    <Col flex="1 0 25%" className={styles.column}>
                         <Select
                             mode="multiple"
                             maxTagCount="responsive"
@@ -97,8 +99,8 @@ const MealsPage = (props: IMealPageProps) => {
                             })}
                         ></Select>
                     </Col>
-                    <Divider />
                 </Row>
+                <Divider style={{ paddingBottom: "20px" }} />
                 <Row gutter={[16, 16]} justify="center">
                     {mealList()}
                 </Row>

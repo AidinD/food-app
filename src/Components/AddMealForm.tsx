@@ -33,6 +33,7 @@ const AddMealForm = (props: IAddMealProps) => {
             onFinish={onAddMeal}
             labelCol={{ span: 5 }}
             wrapperCol={{ span: 16 }}
+            initialValues={{ rating: 3 }}
         >
             <Form.Item
                 name="name"

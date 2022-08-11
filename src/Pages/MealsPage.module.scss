@@ -5,6 +5,9 @@
         bottom: 33px;
         right: 33px;
     }
+    .searchBarRow {
+        width: 90% !important;
+    }
 }
 
 @media (max-width: $breakpoint-phone) {
@@ -12,8 +15,21 @@
         bottom: 33px;
         right: 33px;
     }
+    .searchBarRow {
+        width: 90% !important;
+    }
+    .column {
+        flex: 100% !important;
+    }
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
 }
 
 .searchBarRow {
-    padding-bottom: 20px;
+    width: 50%;
 }
