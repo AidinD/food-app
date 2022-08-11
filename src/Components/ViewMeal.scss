@@ -1,5 +1,14 @@
+.viewContainer {
+    min-height: 200px;
+}
+
 .viewFooter {
     position: absolute;
     bottom: 0;
     width: 100%;
+}
+
+#tagList > .ant-tag {
+    margin-bottom: 2px;
+    font-weight: 600;
 }
