@@ -1,34 +1,29 @@
 import { Form, Input, Rate, Select } from "antd";
-import React from "react";
+import React, { useEffect } from "react";
 import { useStore } from "../Stores/StoreProvider";
-import { UserDTO } from "../Types/User";
 import TextArea from "antd/lib/input/TextArea";
-import { Meal } from "../Types/Meal";
+import { MealForm, Tag } from "../Types/Meal";
+import { observer } from "mobx-react-lite";
 
 interface IAddMealProps {
     form: any; // TODO what type is this??
-    onAddMeal: (user: UserDTO) => void;
 }
 
 const AddMealForm = (props: IAddMealProps) => {
-    const { mealStore } = useStore();
+    const { mealStore, uiStore } = useStore();
 
-    const onAddMeal = async (values: Meal) => {
+    useEffect(() => {
+        props.form.resetFields();
+    }, [props.form, uiStore.showAddMealModal]); // Is this the best way?
+
+    const onAddMeal = async (values: MealForm) => {
         if (await mealStore.addMeal(values)) {
             props.form.resetFields();
         }
     };
 
     const getTagsFromStore = () => {
-        return tagsMock();
-    };
-
-    const tagsMock = () => {
-        return [
-            { label: "test1", value: "1" },
-            { label: "test2", value: "2" },
-            { label: "test3", value: "3" },
-        ];
+        return mealStore.allTags;
     };
 
     return (
@@ -71,15 +66,19 @@ const AddMealForm = (props: IAddMealProps) => {
             <Form.Item name="image" label="Image URL">
                 <Input name="image" placeholder="Image URL" allowClear={true} />
             </Form.Item>
-            <Form.Item name="tags" label="Tags">
-                <Select
-                    mode="tags"
-                    tokenSeparators={[","]}
-                    options={getTagsFromStore()}
-                ></Select>
+            <Form.Item name="tag_ids" label="Tags">
+                <Select mode="tags" allowClear>
+                    {getTagsFromStore().map((tag: Tag) => {
+                        return (
+                            <Select.Option key={tag.id}>
+                                {tag.name}
+                            </Select.Option>
+                        );
+                    })}
+                </Select>
             </Form.Item>
         </Form>
     );
 };
 
-export default AddMealForm;
+export default observer(AddMealForm);

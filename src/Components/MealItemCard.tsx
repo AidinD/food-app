@@ -21,7 +21,7 @@ const MealItemCard = (props: IMealRowProps) => {
                     className="mealRating"
                     disabled
                     allowHalf
-                    defaultValue={props.meal.rating}
+                    value={props.meal.rating}
                 />
                 <div>{props.meal.description}</div>
                 <div className="tags-container">
@@ -36,8 +36,6 @@ const MealItemCard = (props: IMealRowProps) => {
     };
 
     const handleViewMealClick = (event: React.MouseEvent<HTMLElement>) => {
-        console.log("View meal clicked");
-
         mealStore.setSelectedMeal(props.meal);
         uiStore.setShowViewMealModal(true);
     };
@@ -45,7 +43,6 @@ const MealItemCard = (props: IMealRowProps) => {
     const handleEditMealClick = (event: React.MouseEvent<HTMLElement>) => {
         event.preventDefault();
         event.stopPropagation();
-        console.log("Edit meal clicked");
 
         mealStore.setSelectedMeal(props.meal);
         uiStore.setShowEditMealModal(true);
@@ -54,6 +51,8 @@ const MealItemCard = (props: IMealRowProps) => {
     const handleDeleteMealClick = (event: React.MouseEvent<HTMLElement>) => {
         event.preventDefault();
         event.stopPropagation();
+
+        mealStore.deleteMeal(props.meal);
     };
 
     const mealItemCard = () => {

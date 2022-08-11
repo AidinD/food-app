@@ -1,26 +1,44 @@
 import { Form, Input, Rate, Select } from "antd";
 import { useStore } from "../Stores/StoreProvider";
-import { UserDTO } from "../Types/User";
 import TextArea from "antd/lib/input/TextArea";
-import { Meal } from "../Types/Meal";
-import { format } from "path";
+import { Meal, MealForm, Tag } from "../Types/Meal";
+import { observer } from "mobx-react-lite";
+import { useEffect } from "react";
 
 interface IEditMealProps {
     form: any; // TODO what type is this??
     meal: Meal;
-    onEditMeal: (user: UserDTO) => void;
 }
 
 const EditMealForm = (props: IEditMealProps) => {
-    const { mealStore } = useStore();
+    const { mealStore, uiStore } = useStore();
 
-    const onEditMeal = async (values: Meal) => {
-        if (await mealStore.addMeal(values)) {
+    useEffect(() => {
+        props.form.resetFields();
+    }, [uiStore.showEditMealModal, props.meal, props.form]);
+
+    const onEditMeal = async (values: MealForm) => {
+        const tags = mealStore.allTags.filter((tag) => {
+            return values.tag_values.map((tag) => tag.value).includes(tag.id);
+        });
+
+        console.log("values", values);
+
+        console.log("tags", tags);
+
+        const updatedMeal: Meal = {
+            ...props.meal,
+            ...values,
+            tags,
+        };
+        if (await mealStore.updateMeal(updatedMeal)) {
             props.form.resetFields();
         }
     };
 
-    const getTagsFromStore = () => {};
+    const getTagsFromStore = () => {
+        return mealStore.allTags;
+    };
 
     return (
         <Form
@@ -29,7 +47,12 @@ const EditMealForm = (props: IEditMealProps) => {
             onFinish={onEditMeal}
             labelCol={{ span: 5 }}
             wrapperCol={{ span: 16 }}
-            initialValues={props.meal}
+            initialValues={{
+                ...props.meal,
+                tag_values: props.meal.tags.map((tag: Tag) => {
+                    return { value: tag.id, label: tag.name };
+                }),
+            }}
         >
             <Form.Item
                 name="name"
@@ -63,15 +86,18 @@ const EditMealForm = (props: IEditMealProps) => {
             <Form.Item name="image" label="Image URL">
                 <Input name="image" placeholder="Image URL" allowClear={true} />
             </Form.Item>
-            <Form.Item name="tags" label="Tags">
+            <Form.Item name="tag_values" label="Tags">
                 <Select
-                    mode="tags"
-                    tokenSeparators={[","]}
-                    //options={getTagsFromStore()}
+                    mode="multiple"
+                    allowClear
+                    labelInValue
+                    options={getTagsFromStore().map((tag: Tag) => {
+                        return { value: tag.id, label: tag.name };
+                    })}
                 ></Select>
             </Form.Item>
         </Form>
     );
 };
 
-export default EditMealForm;
+export default observer(EditMealForm);

@@ -4,6 +4,17 @@ export type Meal = {
     description: string;
     tags: Tag[];
     recipe: string;
+    timesMade: number;
+    lastMade: Date;
+    image: string;
+    rating: number;
+};
+
+export type MealForm = {
+    name: string;
+    description: string;
+    tag_values: { label: string; value: number }[];
+    recipe: string;
     lastMade: Date;
     image: string;
     rating: number;
@@ -13,9 +24,21 @@ export type MealDTO = {
     name: string;
     description: string;
     rating: number;
-    tags: Tag[];
+    tag_ids: number[];
     online_url: string;
     image_url: string;
+    user: number;
+};
+
+export type MealUpdateDTO = {
+    name: string;
+    description: string;
+    rating: number;
+    tag_ids: number[];
+    online_url: string;
+    image_url: string;
+    times_made: number;
+    last_made: string;
     user: number;
 };
 

@@ -56,26 +56,6 @@ const MealsPage = (props: IMealPageProps) => {
         mealStore.filterMeals();
     };
 
-    const tagRender = (props: CustomTagProps) => {
-        const { label, value, closable, onClose } = props;
-        const onPreventMouseDown = (e: React.MouseEvent<HTMLElement>) => {
-            e.preventDefault();
-            e.stopPropagation();
-        };
-
-        return (
-            <TagAnt
-                closable={closable}
-                onClose={onClose}
-                onMouseDown={onPreventMouseDown}
-                color={value}
-                style={{ marginRight: "3px" }}
-            >
-                {label}
-            </TagAnt>
-        );
-    };
-
     return (
         <>
             <div className={styles.container}>
@@ -142,7 +122,7 @@ const MealsPage = (props: IMealPageProps) => {
                 }}
                 okText="Add"
             >
-                <AddMealForm form={form} onAddMeal={() => {}} />
+                <AddMealForm form={form} />
             </Modal>
             <Modal
                 visible={uiStore.showViewMealModal}
@@ -155,14 +135,14 @@ const MealsPage = (props: IMealPageProps) => {
             <Modal
                 title="Edit meal"
                 visible={uiStore.showEditMealModal}
-                onOk={() => uiStore.setShowEditMealModal(false)}
-                onCancel={() => uiStore.setShowEditMealModal(false)}
+                okText="Save"
+                onOk={form.submit}
+                onCancel={() => {
+                    form.resetFields();
+                    uiStore.setShowEditMealModal(false);
+                }}
             >
-                <EditMealForm
-                    form={form}
-                    meal={mealStore.selectedMeal!}
-                    onEditMeal={() => {}}
-                />
+                <EditMealForm form={form} meal={mealStore.selectedMeal!} />
             </Modal>
         </>
     );

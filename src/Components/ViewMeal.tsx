@@ -1,5 +1,6 @@
-import { Col, Divider, Image, Rate, Row, Tag as TagAnt } from "antd";
+import { Col, Divider, Empty, Image, Rate, Row, Tag as TagAnt } from "antd";
 import Title from "antd/lib/typography/Title";
+import { observer } from "mobx-react-lite";
 import { Meal, Tag } from "../Types/Meal";
 import "./ViewMeal.scss";
 
@@ -9,9 +10,13 @@ interface IViewMealProps {
 
 const AddMealForm = (props: IViewMealProps) => {
     return (
-        <Row>
+        <Row className="viewContainer">
             <Col span={12}>
-                <Image src={props.meal.image} />
+                {props.meal.image ? (
+                    <Image src={props.meal.image} />
+                ) : (
+                    <Empty description={"No image available"} />
+                )}
             </Col>
             <Col offset={1} span={11}>
                 <Title id="title" level={2}>
@@ -45,4 +50,4 @@ const AddMealForm = (props: IViewMealProps) => {
     );
 };
 
-export default AddMealForm;
+export default observer(AddMealForm);

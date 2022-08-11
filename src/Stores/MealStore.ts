@@ -1,5 +1,5 @@
 import { makeAutoObservable, observable, action, runInAction } from "mobx";
-import { Meal, MealResponse, Tag } from "../Types/Meal";
+import { Meal, MealForm, MealResponse, Tag } from "../Types/Meal";
 import RootStore from "./RootStore";
 import { UiStore } from "./UiStore";
 import configData from "../Config/config.json";
@@ -7,7 +7,8 @@ import { ResponseJson } from "../Types/Shared";
 import { showNotification } from "../Utils/Notification";
 import {
     MapFromMealResponseToMeal,
-    MapFromMealToMealDTO,
+    MapFromMealFormToMealDTO,
+    MapFromMealToMealUpdateDTO,
 } from "../Types/MealMapper";
 import { UserStore } from "./UserStore";
 
@@ -53,6 +54,10 @@ export class MealStore {
 
     get allMeals() {
         return this.meals;
+    }
+
+    get allTags() {
+        return this.tags;
     }
 
     get filteredMeals() {
@@ -149,11 +154,11 @@ export class MealStore {
         }
     };
 
-    addMeal = async (meal: Meal): Promise<boolean> => {
+    addMeal = async (meal: MealForm): Promise<boolean> => {
         const requestOptions = {
             method: "PUT",
             body: JSON.stringify(
-                MapFromMealToMealDTO(meal, this.userStore.currentUser!.id)
+                MapFromMealFormToMealDTO(meal, this.userStore.currentUser!.id)
             ),
             headers: { "Content-Type": "application/json" },
         };
@@ -172,6 +177,70 @@ export class MealStore {
                     3
                 );
                 this.uiStore.setShowAddMealModal(false);
+                return Promise.resolve(true);
+            } else throw new Error(dataJson.data.message);
+        } catch (error: any) {
+            showNotification(error.toString(), "", "error", 0);
+            return Promise.resolve(false);
+        } finally {
+            this.uiStore.setIsLoading(false);
+            this.loadMeals();
+        }
+    };
+
+    deleteMeal = async (meal: Meal): Promise<boolean> => {
+        const requestOptions = {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+        };
+
+        try {
+            const response = await fetch(
+                configData.SERVER_URL + "meal/" + meal.id,
+                requestOptions
+            );
+            const dataJson: ResponseJson = await response.json();
+            if (response.status === 200) {
+                showNotification(
+                    "Success",
+                    "Meal was successfully deleted",
+                    "success",
+                    3
+                );
+                return Promise.resolve(true);
+            } else throw new Error(dataJson.data.message);
+        } catch (error: any) {
+            showNotification(error.toString(), "", "error", 0);
+            return Promise.resolve(false);
+        } finally {
+            this.uiStore.setIsLoading(false);
+            this.loadMeals();
+        }
+    };
+
+    updateMeal = async (meal: Meal): Promise<boolean> => {
+        const requestOptions = {
+            method: "PUT",
+            body: JSON.stringify(
+                MapFromMealToMealUpdateDTO(meal, this.userStore.currentUser!.id)
+            ),
+            headers: { "Content-Type": "application/json" },
+        };
+
+        try {
+            const response = await fetch(
+                configData.SERVER_URL + "meal/" + meal.id,
+                requestOptions
+            );
+            const dataJson: ResponseJson = await response.json();
+            if (response.status === 200) {
+                showNotification(
+                    "Success",
+                    "Meal was successfully updated",
+                    "success",
+                    3
+                );
+                this.uiStore.setShowEditMealModal(false);
                 return Promise.resolve(true);
             } else throw new Error(dataJson.data.message);
         } catch (error: any) {
