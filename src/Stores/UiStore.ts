@@ -6,6 +6,8 @@ export class UiStore {
 
     isLoading: boolean = false;
 
+    showSideBar: boolean = false;
+
     // Modals
     showSignUpModal: boolean = false;
     showAddMealModal: boolean = false;
@@ -18,6 +20,7 @@ export class UiStore {
         makeAutoObservable(this, {
             // Observables
             isLoading: observable,
+            showSideBar: observable,
             showSignUpModal: observable,
             showAddMealModal: observable,
             showViewMealModal: observable,
@@ -27,6 +30,7 @@ export class UiStore {
 
             // Actions
             setIsLoading: action,
+            setShowSideBar: action,
             setShowSignUpModal: action,
             setShowAddMealModal: action,
             setShowViewMealModal: action,
@@ -36,6 +40,10 @@ export class UiStore {
 
     setIsLoading = (isLoading: boolean) => {
         this.isLoading = isLoading;
+    };
+
+    setShowSideBar = (showSideBar: boolean) => {
+        this.showSideBar = showSideBar;
     };
 
     setShowSignUpModal = (showSignUpModal: boolean) => {

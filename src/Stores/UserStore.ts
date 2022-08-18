@@ -1,4 +1,4 @@
-import { makeAutoObservable, observable, action } from "mobx";
+import { makeAutoObservable, observable, action, computed } from "mobx";
 import { User, UserDTO } from "../Types/User";
 import RootStore from "./RootStore";
 import { UiStore } from "./UiStore";
@@ -25,14 +25,18 @@ export class UserStore {
             currentUser: observable,
 
             // Computed
+            isLoggedIn: computed,
 
             // Actions
             setCurrentUser: action,
             saveCurrentUserToLocalStorage: action,
             setUsernameInput: action,
-            isLoggedIn: action,
             startLoginFlow: action,
         });
+    }
+
+    get isLoggedIn(): boolean {
+        return this.currentUser !== undefined;
     }
 
     setUsernameInput(userInput: string) {
@@ -114,9 +118,5 @@ export class UserStore {
         } else {
             this.setCurrentUser(undefined);
         }
-    };
-
-    isLoggedIn = (): boolean => {
-        return this.currentUser !== undefined;
     };
 }

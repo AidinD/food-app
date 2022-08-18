@@ -1,4 +1,4 @@
-import { Button, Form, Input, Modal, PageHeader, Row } from "antd";
+import { Button, Form, Input, Layout, Modal, PageHeader, Row } from "antd";
 import { observer } from "mobx-react-lite";
 import * as React from "react";
 import { useStore } from "../Stores/StoreProvider";
@@ -7,6 +7,7 @@ import { useEffect } from "react";
 import styles from "./LoginPage.module.scss";
 import AddUserForm from "../Components/AddUserForm";
 import { UserDTO } from "../Types/User";
+import { Content, Header } from "antd/lib/layout/layout";
 
 interface IAppProps {}
 
@@ -33,15 +34,15 @@ const LoginPage = (props: IAppProps) => {
 
     // TODO implement onFinishFailed on all forms
     return (
-        <div className={styles.container}>
-            <Row justify="center" align="middle" className="title-row">
+        <Layout id={styles.container}>
+            <Header className={styles.loginHeader}>
                 <PageHeader
                     className="site-page-header"
                     backIcon={false}
                     title="Login page"
                 />
-            </Row>
-            <Row justify="center" align="middle" className="form-row">
+            </Header>
+            <Content className={styles.loginContent}>
                 <Form name="login" onFinish={onLogin}>
                     <Form.Item
                         name="name"
@@ -77,7 +78,7 @@ const LoginPage = (props: IAppProps) => {
                         </Button>
                     </Form.Item>
                 </Form>
-            </Row>
+            </Content>
             <Modal
                 title="Sign up"
                 visible={uiStore.showSignUpModal}
@@ -89,7 +90,7 @@ const LoginPage = (props: IAppProps) => {
             >
                 <AddUserForm form={form} onSignup={onSignup} />
             </Modal>
-        </div>
+        </Layout>
     );
 };
 
