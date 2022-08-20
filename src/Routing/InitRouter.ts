@@ -10,7 +10,7 @@ const notFound = createRouterState("notFound");
 
 export const routes = [
     {
-        name: "home",
+        name: "login",
         pattern: "/",
     },
     {

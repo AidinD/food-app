@@ -21,6 +21,7 @@ import MealItemCard from "../Components/MealItemCard";
 import { SearchOutlined } from "@ant-design/icons";
 import ViewMeal from "../Components/ViewMeal";
 import EditMealForm from "../Components/EditMealForm";
+import { Content, Footer, Header } from "antd/lib/layout/layout";
 
 interface IMealPageProps {}
 
@@ -56,16 +57,15 @@ const MealsPage = (props: IMealPageProps) => {
     };
 
     return (
-        <>
-            <div className={styles.container}>
-                <Row className="title-row" justify="center">
-                    <PageHeader
-                        className="site-page-header"
-                        backIcon={false}
-                        title="Meal Overview"
-                    />
-                </Row>
-                <Divider />
+        <Layout className={styles.layout}>
+            <Header className={styles.layoutHeader}>
+                <PageHeader
+                    className={styles.pageHeader}
+                    backIcon={false}
+                    title="Meal Overview"
+                />
+            </Header>
+            <Content className={styles.content}>
                 <Row
                     className={styles.searchBarRow}
                     gutter={[16, 16]}
@@ -102,19 +102,20 @@ const MealsPage = (props: IMealPageProps) => {
                     </Col>
                 </Row>
                 <Divider style={{ paddingBottom: "20px" }} />
-                <Row gutter={[16, 16]} justify="center">
-                    {mealList()}
-                </Row>
-            </div>
-            <div className="floating-button">
-                <Button
-                    type="primary"
-                    shape="circle"
-                    size="large"
-                    icon={<PlusOutlined />}
-                    onClick={() => uiStore.setShowAddMealModal(true)}
-                />
-            </div>
+                <Row gutter={[16, 16]}>{mealList()}</Row>
+            </Content>
+            <Footer className={styles.footer}>
+                <div className="floating-button">
+                    <Button
+                        type="primary"
+                        shape="circle"
+                        size="large"
+                        icon={<PlusOutlined />}
+                        onClick={() => uiStore.setShowAddMealModal(true)}
+                    />
+                </div>
+            </Footer>
+
             <Modal
                 title="Add meal"
                 visible={uiStore.showAddMealModal}
@@ -147,7 +148,7 @@ const MealsPage = (props: IMealPageProps) => {
             >
                 <EditMealForm form={form} meal={mealStore.selectedMeal!} />
             </Modal>
-        </>
+        </Layout>
     );
 };
 

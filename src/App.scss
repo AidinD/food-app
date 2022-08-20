@@ -11,7 +11,7 @@ body {
     background-color: $base-color-primary;
 }
 
-.site-page-header span {
+.ant-page-header span {
     color: white;
 }
 
@@ -55,4 +55,13 @@ h3.ant-typography {
 
 .floating-button .ant-btn {
     background-color: $base-color-secondary;
+}
+
+.ant-menu-item-group {
+    height: 60px;
+}
+
+.ant-menu > .ant-menu-item-divider {
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
