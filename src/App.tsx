@@ -94,7 +94,7 @@ const App = () => {
 
     return (
         <Layout className="App">
-            {routerStore.currentRoute?.name !== "home" ? (
+            {routerStore.currentRoute?.name !== "login" ? (
                 <Sider collapsible>
                     <Menu
                         className="menu"
