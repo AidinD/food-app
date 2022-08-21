@@ -7,11 +7,19 @@
     transform: translate(-50%, -50%);
     width: inherit;
     background-color: inherit;
+    align-items: center;
 }
 
 .loginHeader {
+    width: 100vw;
     text-align: center;
-    background-color: $base-color-primary;
+    margin-bottom: 20px;
+    padding: 0;
+}
+
+.loginPageHeader {
+    display: inline-flex;
+    padding: 0;
 }
 
 .login-button {

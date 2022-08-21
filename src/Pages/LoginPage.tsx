@@ -37,7 +37,7 @@ const LoginPage = (props: IAppProps) => {
         <Layout id={styles.container}>
             <Header className={styles.loginHeader}>
                 <PageHeader
-                    className="site-page-header"
+                    className={styles.loginPageHeader}
                     backIcon={false}
                     title="Login page"
                 />
