@@ -47,7 +47,8 @@ const App = () => {
             "Overview",
             "overview",
             "item",
-            <FontAwesomeIcon icon={faUtensils} />
+            <FontAwesomeIcon icon={faUtensils} />,
+            () => routerStore.goToHomePage()
         ),
         getItem("Planning", "planning", "divider"),
         getItem(
@@ -69,7 +70,15 @@ const App = () => {
             <FontAwesomeIcon icon={faLayerGroup} />
         ),
         getItem("Manager", "manager", "divider"),
-        getItem("Meals", "meals", "item", <FontAwesomeIcon icon={faBurger} />),
+        getItem(
+            "Meals",
+            "meals",
+            "item",
+            <FontAwesomeIcon icon={faBurger} />,
+            () => {
+                routerStore.goToMealsPage();
+            }
+        ),
         getItem(
             "Ingredients",
             "ingredients",
@@ -88,7 +97,10 @@ const App = () => {
             "Sign out",
             "signout",
             "item",
-            <FontAwesomeIcon icon={faRightFromBracket} />
+            <FontAwesomeIcon icon={faRightFromBracket} />,
+            () => {
+                userStore.logout();
+            }
         ),
     ];
 

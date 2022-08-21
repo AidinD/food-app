@@ -23,8 +23,14 @@ export class RouterStoreWrapper {
 
     goToLogin(options?: { [key: string]: any }) {
         console.log("goToLogin");
-        this.routerStore.goTo("home", options);
+        this.routerStore.goTo("login", options);
         this.rootStore.uiStore.setShowSideBar(false);
+    }
+
+    goToHomePage(options?: { [key: string]: any }) {
+        this.routerStore.goTo("homePage", options);
+        this.routerStore.goTo("home", options);
+        this.rootStore.uiStore.setShowSideBar(true);
     }
 
     goToMealsPage(options?: { [key: string]: any }) {

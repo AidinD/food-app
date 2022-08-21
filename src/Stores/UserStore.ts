@@ -5,10 +5,12 @@ import { UiStore } from "./UiStore";
 import configData from "../Config/config.json";
 import { ResponseJson } from "../Types/Shared";
 import { showNotification } from "../Utils/Notification";
+import { RouterStoreWrapper } from "../Routing/RouterStoreWrapper";
 
 export class UserStore {
     rootStore: RootStore;
     uiStore: UiStore;
+    routerStore: RouterStoreWrapper;
 
     currentUser: User | undefined = undefined;
     usernameInput: string = "";
@@ -16,6 +18,7 @@ export class UserStore {
     constructor(rootStore: RootStore) {
         this.rootStore = rootStore;
         this.uiStore = rootStore.uiStore;
+        this.routerStore = rootStore.routerStore;
 
         this.getUserFromLocalStorage();
 
@@ -59,7 +62,7 @@ export class UserStore {
             const dataJson: ResponseJson = await response.json();
             if (dataJson.status === 200) {
                 this.login(dataJson.data as User);
-                this.rootStore.routerStore.goToMealsPage();
+                this.rootStore.routerStore.goToHomePage();
             } else if (dataJson.status === 204) {
                 throw new Error("User does not exist");
             }
@@ -99,6 +102,12 @@ export class UserStore {
     login = (user: User) => {
         this.setCurrentUser(user);
         this.saveCurrentUserToLocalStorage(user);
+    };
+
+    logout = () => {
+        this.setCurrentUser(undefined);
+        this.saveCurrentUserToLocalStorage({} as User);
+        this.routerStore.goToLogin();
     };
 
     setCurrentUser = (user: User | undefined) => {
