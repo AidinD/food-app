@@ -85,7 +85,15 @@ const App = () => {
             "item",
             <FontAwesomeIcon icon={faCarrot} />
         ),
-        getItem("Tags", "tags", "item", <FontAwesomeIcon icon={faTags} />),
+        getItem(
+            "Tags",
+            "tags",
+            "item",
+            <FontAwesomeIcon icon={faTags} />,
+            () => {
+                routerStore.goToTagsPage();
+            }
+        ),
         getItem(
             "Categories",
             "categories",

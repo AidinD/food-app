@@ -15,11 +15,11 @@ export const routes = [
     },
     {
         name: "mealsPage",
-        pattern: "/mealspage/",
+        pattern: "/meals/",
     },
     {
-        name: "meal",
-        pattern: "/meal/:id",
+        name: "tagsPage",
+        pattern: "/tags/",
     },
     {
         name: "notFound",

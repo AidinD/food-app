@@ -1,6 +1,7 @@
 import React from "react";
 import LoginPage from "../Pages/LoginPage";
 import MealsPage from "../Pages/MealsPage";
+import TagsPage from "../Pages/TagsPage";
 
 export const viewMap = {
     login: <LoginPage />,
@@ -10,7 +11,7 @@ export const viewMap = {
     //layoutPage: <LayoutPage />,
     mealsPage: <MealsPage />,
     //ingredientsPage: <IngredientsPage />,
-    //tagsPage: <TagsPage />,
+    tagsPage: <TagsPage />,
     //categoriesPage: <CategoriesPage />,
     //notFound: <NotFoundPage />,
 };

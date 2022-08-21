@@ -38,4 +38,10 @@ export class RouterStoreWrapper {
         this.routerStore.goTo("mealsPage", options);
         this.rootStore.uiStore.setShowSideBar(true);
     }
+
+    goToTagsPage(options?: { [key: string]: any }) {
+        console.log("goToTagsPage");
+        this.routerStore.goTo("tagsPage", options);
+        this.rootStore.uiStore.setShowSideBar(true);
+    }
 }
