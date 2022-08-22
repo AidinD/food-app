@@ -1,4 +1,4 @@
-import { computed, makeAutoObservable } from "mobx";
+import { action, computed, makeAutoObservable, observable } from "mobx";
 import { useRouterStore } from "mobx-state-router";
 import RootStore from "../Stores/RootStore";
 
@@ -6,20 +6,28 @@ export class RouterStoreWrapper {
     rootStore: RootStore;
     routerStore = useRouterStore();
 
+    pageName: string = "";
+
     constructor(rootStore: RootStore) {
         this.rootStore = rootStore;
 
         makeAutoObservable(this, {
             // Observables
+            pageName: observable,
             // Computed
             currentRoute: computed,
             // Actions
+            setPageName: action,
         });
     }
 
     get currentRoute() {
         return this.routerStore.getCurrentRoute();
     }
+
+    setPageName = (name: string) => {
+        this.pageName = name;
+    };
 
     goToLogin(options?: { [key: string]: any }) {
         console.log("goToLogin");

@@ -1,0 +1,27 @@
+@import "../Themes/variables.scss";
+
+@media (max-width: $breakpoint-tablet) {
+    .searchBarRow {
+        width: 90% !important;
+    }
+}
+
+@media (max-width: $breakpoint-phone) {
+    .searchBarRow {
+        width: 90% !important;
+    }
+    .searchBarColumn {
+        flex: 100% !important;
+    }
+}
+
+.searchBarRow {
+}
+
+.searchBarColumn {
+    width: 300px;
+}
+
+.searchBarColumn > .ant-select {
+    width: 100%;
+}

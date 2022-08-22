@@ -3,7 +3,7 @@ import { RouterView } from "mobx-state-router";
 import { Key, ReactNode, useEffect } from "react";
 import { viewMap } from "./Routing/ViewMap";
 import { useStore } from "./Stores/StoreProvider";
-import { Layout, Menu, MenuProps } from "antd";
+import { Layout, Menu, MenuProps, PageHeader } from "antd";
 import { observer } from "mobx-react-lite";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -17,6 +17,7 @@ import {
     faHashtag,
     faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
+import { Content, Header } from "antd/lib/layout/layout";
 
 const App = () => {
     const { userStore, routerStore } = useStore();
@@ -115,17 +116,36 @@ const App = () => {
     return (
         <Layout className="App">
             {routerStore.currentRoute?.name !== "login" ? (
-                <Sider collapsible>
-                    <Menu
-                        className="menu"
-                        mode="inline"
-                        theme="dark"
-                        items={items}
-                        defaultSelectedKeys={["overview"]}
-                    ></Menu>
-                </Sider>
-            ) : null}
-            <RouterView viewMap={viewMap} />
+                <>
+                    <Sider collapsible>
+                        <Menu
+                            className="menu"
+                            mode="inline"
+                            theme="dark"
+                            items={items}
+                            defaultSelectedKeys={["overview"]}
+                            onSelect={(info) =>
+                                routerStore.setPageName(
+                                    info.key.charAt(0).toUpperCase() +
+                                        info.key.slice(1)
+                                )
+                            }
+                        ></Menu>
+                    </Sider>
+                    <Layout id="appLayout">
+                        <Header id="appHeader">
+                            <PageHeader
+                                className="appPageHader"
+                                backIcon={false}
+                                title={routerStore.pageName}
+                            />
+                        </Header>
+                        <RouterView viewMap={viewMap} />
+                    </Layout>
+                </>
+            ) : (
+                <RouterView viewMap={viewMap} />
+            )}
         </Layout>
     );
 };

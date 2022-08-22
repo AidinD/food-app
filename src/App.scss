@@ -6,7 +6,6 @@ body {
 }
 
 .App {
-    text-align: center;
     min-height: 100vh;
     background-color: $base-color-primary;
 }
@@ -58,10 +57,20 @@ h3.ant-typography {
 }
 
 .ant-menu-item-group {
-    height: 60px;
+    height: 68px;
 }
 
 .ant-menu > .ant-menu-item-divider {
     margin-top: 20px;
     margin-bottom: 20px;
+}
+
+#appLayout {
+    background-color: inherit;
+    width: 100vw;
+}
+
+#appHeader {
+    margin-bottom: 30px;
+    padding: 0;
 }

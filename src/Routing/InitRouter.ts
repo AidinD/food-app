@@ -3,12 +3,13 @@ import {
     browserHistory,
     createRouterState,
     HistoryAdapter,
+    Route,
     RouterStore,
 } from "mobx-state-router";
 
 const notFound = createRouterState("notFound");
 
-export const routes = [
+export const routes: Route[] = [
     {
         name: "login",
         pattern: "/",
