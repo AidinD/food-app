@@ -64,12 +64,18 @@ const LoginPage = (props: IAppProps) => {
                             prefix={<UserOutlined style={{ color: "grey" }} />}
                         />
                     </Form.Item>
-                    <Form.Item name="loginButton" className="login-button">
+                    <Form.Item
+                        name="loginButton"
+                        className={styles.loginButton}
+                    >
                         <Button type="primary" htmlType="submit">
                             Login
                         </Button>
                     </Form.Item>
-                    <Form.Item name="signUpButton">
+                    <Form.Item
+                        name="signUpButton"
+                        className={styles.signUpButton}
+                    >
                         <Button
                             type="link"
                             onClick={() => uiStore.setShowSignUpModal(true)}
