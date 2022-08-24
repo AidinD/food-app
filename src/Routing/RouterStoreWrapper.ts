@@ -1,15 +1,18 @@
 import { action, computed, makeAutoObservable, observable } from "mobx";
 import { useRouterStore } from "mobx-state-router";
 import RootStore from "../Stores/RootStore";
+import { RouteNames } from "../Types/Shared";
 
 export class RouterStoreWrapper {
     rootStore: RootStore;
     routerStore = useRouterStore();
 
-    pageName: string = "";
+    pageName: RouteNames = "";
 
     constructor(rootStore: RootStore) {
         this.rootStore = rootStore;
+
+        this.pageName = this.currentRoute?.name as RouteNames;
 
         makeAutoObservable(this, {
             // Observables
@@ -25,7 +28,7 @@ export class RouterStoreWrapper {
         return this.routerStore.getCurrentRoute();
     }
 
-    setPageName = (name: string) => {
+    setPageName = (name: RouteNames) => {
         this.pageName = name;
     };
 
@@ -36,20 +39,20 @@ export class RouterStoreWrapper {
     }
 
     goToHomePage(options?: { [key: string]: any }) {
-        this.routerStore.goTo("homePage", options);
+        this.routerStore.goTo("home", options);
         this.routerStore.goTo("home", options);
         this.rootStore.uiStore.setShowSideBar(true);
     }
 
     goToMealsPage(options?: { [key: string]: any }) {
         console.log("goToMealsPage");
-        this.routerStore.goTo("mealsPage", options);
+        this.routerStore.goTo("meals", options);
         this.rootStore.uiStore.setShowSideBar(true);
     }
 
     goToTagsPage(options?: { [key: string]: any }) {
         console.log("goToTagsPage");
-        this.routerStore.goTo("tagsPage", options);
+        this.routerStore.goTo("tags", options);
         this.rootStore.uiStore.setShowSideBar(true);
     }
 }

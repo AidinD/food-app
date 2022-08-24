@@ -17,7 +17,8 @@ import {
     faHashtag,
     faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
-import { Content, Header } from "antd/lib/layout/layout";
+import { Header } from "antd/lib/layout/layout";
+import { RouteNames } from "./Types/Shared";
 
 const App = () => {
     const { userStore, routerStore } = useStore();
@@ -29,6 +30,8 @@ const App = () => {
         if (!userStore.isLoggedIn) {
             routerStore.goToLogin();
         }
+
+        console.log("pagename", routerStore.currentRoute?.pattern);
     }, [userStore, routerStore]);
 
     const getItem = (
@@ -59,7 +62,7 @@ const App = () => {
             <FontAwesomeIcon icon={faCalendarDay} />
         ),
         getItem(
-            "ShoppingList",
+            "Shopping List",
             "shoppingList",
             "item",
             <FontAwesomeIcon icon={faListCheck} />
@@ -123,11 +126,12 @@ const App = () => {
                             mode="inline"
                             theme="dark"
                             items={items}
-                            defaultSelectedKeys={["overview"]}
+                            defaultSelectedKeys={[
+                                routerStore.currentRoute!.name,
+                            ]}
                             onSelect={(info) =>
                                 routerStore.setPageName(
-                                    info.key.charAt(0).toUpperCase() +
-                                        info.key.slice(1)
+                                    routerStore.currentRoute?.name as RouteNames
                                 )
                             }
                         ></Menu>
@@ -137,7 +141,12 @@ const App = () => {
                             <PageHeader
                                 className="appPageHader"
                                 backIcon={false}
-                                title={routerStore.pageName}
+                                title={
+                                    routerStore.pageName
+                                        .charAt(0)
+                                        .toUpperCase() +
+                                    routerStore.pageName.slice(1)
+                                }
                             />
                         </Header>
                         <RouterView viewMap={viewMap} />

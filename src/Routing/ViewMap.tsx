@@ -9,9 +9,9 @@ export const viewMap = {
     //plannerPage: <PlannerPage />,
     //shoppingListPage: <ShoppingListPage />,
     //layoutPage: <LayoutPage />,
-    mealsPage: <MealsPage />,
+    meals: <MealsPage />,
     //ingredientsPage: <IngredientsPage />,
-    tagsPage: <TagsPage />,
+    tags: <TagsPage />,
     //categoriesPage: <CategoriesPage />,
     //notFound: <NotFoundPage />,
 };

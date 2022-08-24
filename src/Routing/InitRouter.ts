@@ -15,11 +15,11 @@ export const routes: Route[] = [
         pattern: "/",
     },
     {
-        name: "mealsPage",
+        name: "meals",
         pattern: "/meals/",
     },
     {
-        name: "tagsPage",
+        name: "tags",
         pattern: "/tags/",
     },
     {
