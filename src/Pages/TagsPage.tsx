@@ -1,4 +1,4 @@
-import { Button, Col, Divider, Form } from "antd";
+import { Button, Col, Divider, Form, Row } from "antd";
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import { useStore } from "../Stores/StoreProvider";
@@ -32,11 +32,9 @@ const TagsPage = (props: IMealPageProps) => {
     return (
         <>
             <Content className={styles.content}>
-                <SearchBar />
+                <SearchBar route="Tags" />
                 <Divider style={{ paddingBottom: "20px" }} />
-                {
-                    //<Row gutter={[16, 16]}>{tagList()}</Row>
-                }
+                <Row gutter={[16, 16]}>{tagList()}</Row>
             </Content>
             <Footer className={styles.footer}>
                 <div className="floating-button">

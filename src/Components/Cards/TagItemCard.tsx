@@ -1,7 +1,7 @@
 import { Button, Card, Empty, Popconfirm, Rate, Tag } from "antd";
 import { Tag as MealTag } from "../../Types/Meal";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
-import "./MealItemCard.scss";
+import "./TagItemCard.scss";
 import { observer } from "mobx-react-lite";
 import React from "react";
 import { useStore } from "../../Stores/StoreProvider";
@@ -16,9 +16,15 @@ const TagItemCard = (props: ITagItemProps) => {
 
     const getCardDescription = () => {
         return (
-            <div>
-                <div>{props.tag.name}</div>
-            </div>
+            <>
+                <div
+                    className="circleDiv"
+                    style={{
+                        backgroundColor: props.tag.color,
+                    }}
+                ></div>
+                <div className="tagDescription">{props.tag.color}</div>
+            </>
         );
     };
 

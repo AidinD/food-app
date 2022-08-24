@@ -53,7 +53,7 @@ export class TagStore {
     };
 
     setTags = (tags: Tag[]) => {
-        this.tags = tags;
+        this.tags = tags.sort((a, b) => a.name.localeCompare(b.name));
     };
 
     setTextFilter = (text: string) => {
@@ -75,6 +75,8 @@ export class TagStore {
                 return tag.id === tagId;
             });
         });
+
+        console.log("tagfilter", tagFilter);
 
         const textFilter = tagFilter.filter((tag) => {
             return tag.name

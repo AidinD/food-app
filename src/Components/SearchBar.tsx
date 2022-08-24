@@ -5,25 +5,49 @@ import { useStore } from "../Stores/StoreProvider";
 import { Tag } from "../Types/Meal";
 import "./SearchBar.scss";
 import { useEffect } from "react";
+import { RouteNames } from "../Types/Shared";
 
-interface ISearchBarProps {}
+interface ISearchBarProps {
+    route: RouteNames;
+}
 
 const SearchBar = (props: ISearchBarProps) => {
     const { mealStore, tagStore } = useStore();
 
     useEffect(() => {
         mealStore.clearFilters();
-    }, [mealStore]);
+        tagStore.clearFilters();
+    }, [mealStore, tagStore]);
 
     const handleTextFilter = (event: React.ChangeEvent<HTMLInputElement>) => {
         const value = event.target.value;
-        mealStore.setTextFilter(value);
-        mealStore.filterMeals();
+        switch (props.route) {
+            case "Meals":
+                mealStore.setTextFilter(value);
+                mealStore.filterMeals();
+                break;
+            case "Tags":
+                tagStore.setTextFilter(value);
+                tagStore.filterTags();
+                break;
+            default:
+                break;
+        }
     };
 
     const handleTagFilter = (value: any) => {
-        mealStore.setTagFilter(value);
-        mealStore.filterMeals();
+        switch (props.route) {
+            case "Meals":
+                mealStore.setTagFilter(value);
+                mealStore.filterMeals();
+                break;
+            case "Tags":
+                tagStore.setTagFilter(value);
+                tagStore.filterTags();
+                break;
+            default:
+                break;
+        }
     };
 
     return (
@@ -36,21 +60,23 @@ const SearchBar = (props: ISearchBarProps) => {
                     onChange={handleTextFilter}
                 />
             </Col>
-            <Col className="searchBarColumn">
-                <Select
-                    mode="multiple"
-                    maxTagCount="responsive"
-                    placeholder="Tag"
-                    allowClear
-                    onChange={handleTagFilter}
-                    options={tagStore.filteredTags.map((tag: Tag) => {
-                        return {
-                            value: tag.id,
-                            label: tag.name,
-                        };
-                    })}
-                ></Select>
-            </Col>
+            {props.route === "Meals" ? (
+                <Col className="searchBarColumn">
+                    <Select
+                        mode="multiple"
+                        maxTagCount="responsive"
+                        placeholder="Tag"
+                        allowClear
+                        onChange={handleTagFilter}
+                        options={tagStore.tags.map((tag: Tag) => {
+                            return {
+                                value: tag.id,
+                                label: tag.name,
+                            };
+                        })}
+                    ></Select>
+                </Col>
+            ) : null}
         </Row>
     );
 };

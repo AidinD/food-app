@@ -34,14 +34,23 @@
     height: 100%;
 }
 
-.tagMeta .ant-card-meta-detail .ant-card-meta-title {
-    margin-bottom: 0;
-}
-
 .ant-empty {
     margin: 0;
 }
 
 .ant-empty-image {
     margin: 10px 0;
+}
+
+.tagDescription {
+    display: inline-block;
+}
+
+.circleDiv {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    border-radius: 50%;
+    vertical-align: sub;
 }

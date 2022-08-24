@@ -16,7 +16,7 @@ const MealItemCard = (props: IMealItemProps) => {
 
     const getCardDescription = () => {
         return (
-            <div>
+            <>
                 <Rate
                     className="mealRating"
                     disabled
@@ -31,7 +31,7 @@ const MealItemCard = (props: IMealItemProps) => {
                         </Tag>
                     ))}
                 </div>
-            </div>
+            </>
         );
     };
 

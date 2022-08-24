@@ -36,7 +36,7 @@ const MealsPage = (props: IMealPageProps) => {
     return (
         <>
             <Content className={styles.content}>
-                <SearchBar />
+                <SearchBar route="Meals" />
                 <Divider style={{ paddingBottom: "20px" }} />
                 <Row gutter={[16, 16]}>{mealList()}</Row>
             </Content>
