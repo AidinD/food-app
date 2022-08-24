@@ -5,24 +5,23 @@ import { useEffect } from "react";
 import { useStore } from "../Stores/StoreProvider";
 import styles from "./MealsPage.module.scss";
 import { PlusOutlined } from "@ant-design/icons";
-import AddMealForm from "../Components/AddMealForm";
-import MealItemCard from "../Components/MealItemCard";
+import AddMealForm from "../Components/Forms/AddMealForm";
+import MealItemCard from "../Components/Cards/MealItemCard";
 import ViewMeal from "../Components/ViewMeal";
-import EditMealForm from "../Components/EditMealForm";
+import EditMealForm from "../Components/Forms/EditMealForm";
 import { Content, Footer } from "antd/lib/layout/layout";
 import SearchBar from "../Components/SearchBar";
 
 interface IMealPageProps {}
 
 const MealsPage = (props: IMealPageProps) => {
-    const { uiStore } = useStore();
-    const { mealStore } = useStore();
+    const { uiStore, mealStore, tagStore } = useStore();
     const [form] = Form.useForm();
 
     useEffect(() => {
-        mealStore.loadTags();
+        tagStore.loadTags();
         mealStore.loadMeals();
-    }, [mealStore]);
+    }, [mealStore, tagStore]);
 
     const mealList = () => {
         return mealStore.filteredMeals.map((meal: Meal) => {

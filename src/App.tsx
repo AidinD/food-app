@@ -30,8 +30,6 @@ const App = () => {
         if (!userStore.isLoggedIn) {
             routerStore.goToLogin();
         }
-
-        console.log("pagename", routerStore.currentRoute?.pattern);
     }, [userStore, routerStore]);
 
     const getItem = (

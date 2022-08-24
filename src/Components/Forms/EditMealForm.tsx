@@ -1,43 +1,54 @@
 import { Form, Input, Rate, Select } from "antd";
-import React, { useEffect } from "react";
-import { useStore } from "../Stores/StoreProvider";
+import { useStore } from "../../Stores/StoreProvider";
 import TextArea from "antd/lib/input/TextArea";
-import { MealForm, Tag } from "../Types/Meal";
+import { Meal, MealForm, Tag } from "../../Types/Meal";
 import { observer } from "mobx-react-lite";
+import { useEffect } from "react";
 
-interface IAddMealProps {
+interface IEditMealProps {
     form: any; // TODO what type is this??
+    meal: Meal;
 }
 
-const AddMealForm = (props: IAddMealProps) => {
-    const { mealStore, uiStore } = useStore();
+const EditMealForm = (props: IEditMealProps) => {
+    const { mealStore, tagStore, uiStore } = useStore();
 
     useEffect(() => {
         props.form.resetFields();
-    }, [props.form, uiStore.showAddMealModal]); // Is this the best way?
+    }, [uiStore.showEditMealModal, props.meal, props.form]);
 
-    const onAddMeal = async (values: MealForm) => {
-        console.log("values", values);
+    const onEditMeal = async (values: MealForm) => {
+        const tags = tagStore.allTags.filter((tag) => {
+            return values.tag_values.map((tag) => tag.value).includes(tag.id);
+        });
 
-        values = { ...values };
-
-        if (await mealStore.addMeal(values)) {
+        const updatedMeal: Meal = {
+            ...props.meal,
+            ...values,
+            tags,
+        };
+        if (await mealStore.updateMeal(updatedMeal)) {
             props.form.resetFields();
         }
     };
 
     const getTagsFromStore = () => {
-        return mealStore.allTags;
+        return tagStore.allTags;
     };
 
     return (
         <Form
             name="addmeal"
             form={props.form}
-            onFinish={onAddMeal}
+            onFinish={onEditMeal}
             labelCol={{ span: 5 }}
             wrapperCol={{ span: 16 }}
-            initialValues={{ rating: 3 }}
+            initialValues={{
+                ...props.meal,
+                tag_values: props.meal.tags.map((tag: Tag) => {
+                    return { value: tag.id, label: tag.name };
+                }),
+            }}
         >
             <Form.Item
                 name="name"
@@ -85,4 +96,4 @@ const AddMealForm = (props: IAddMealProps) => {
     );
 };
 
-export default observer(AddMealForm);
+export default observer(EditMealForm);

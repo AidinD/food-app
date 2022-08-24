@@ -20,7 +20,6 @@ export class MealStore {
     meals: Meal[] = [];
     mealsFiltered: Meal[] = [];
     selectedMeal: Meal | undefined = undefined;
-    tags: Tag[] = [];
 
     textFilter: string = "";
     tagFilter: number[] = [];
@@ -35,7 +34,6 @@ export class MealStore {
             meals: observable,
             mealsFiltered: observable,
             selectedMeal: observable,
-            tags: observable,
             textFilter: observable,
             tagFilter: observable,
 
@@ -44,20 +42,14 @@ export class MealStore {
             // Actions
             setFilteredMeals: action,
             setSelectedMeal: action,
-            setTags: action,
             addMeal: action,
             loadMeals: action,
-            loadTags: action,
             setTextFilter: action,
         });
     }
 
     get allMeals() {
         return this.meals;
-    }
-
-    get allTags() {
-        return this.tags;
     }
 
     get filteredMeals() {
@@ -70,10 +62,6 @@ export class MealStore {
 
     setSelectedMeal = (meal: Meal | undefined) => {
         this.selectedMeal = meal;
-    };
-
-    setTags = (tags: Tag[]) => {
-        this.tags = tags;
     };
 
     setTextFilter = (text: string) => {
@@ -132,30 +120,6 @@ export class MealStore {
         } finally {
             this.uiStore.setIsLoading(false);
             this.filterMeals();
-        }
-    };
-
-    loadTags = async () => {
-        this.uiStore.setIsLoading(true);
-
-        const requestOptions = {
-            method: "GET",
-            headers: { "Content-Type": "application/json" },
-        };
-
-        try {
-            const response = await fetch(
-                configData.SERVER_URL + "tags",
-                requestOptions
-            );
-            const dataJson: ResponseJson = await response.json();
-            if (response.status === 200) {
-                this.setTags(dataJson.data as Tag[]);
-            } else throw new Error(dataJson.data.message);
-        } catch (error: any) {
-            showNotification(error.toString(), "", "error", 0);
-        } finally {
-            this.uiStore.setIsLoading(false);
         }
     };
 

@@ -1,9 +1,9 @@
 import { Form, Input } from "antd";
 import React from "react";
-import { useStore } from "../Stores/StoreProvider";
+import { useStore } from "../../Stores/StoreProvider";
 import { UserAddOutlined } from "@ant-design/icons";
 import { observer } from "mobx-react-lite";
-import { UserDTO } from "../Types/User";
+import { UserDTO } from "../../Types/User";
 
 interface IAddUserProps {
     form: any; // TODO what type is this??

@@ -5,7 +5,7 @@ import { useStore } from "../Stores/StoreProvider";
 import { UserOutlined } from "@ant-design/icons";
 import { useEffect } from "react";
 import styles from "./LoginPage.module.scss";
-import AddUserForm from "../Components/AddUserForm";
+import AddUserForm from "../Components/Forms/AddUserForm";
 import { UserDTO } from "../Types/User";
 import { Content, Header } from "antd/lib/layout/layout";
 

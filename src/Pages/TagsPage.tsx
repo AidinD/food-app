@@ -1,33 +1,29 @@
-import { Button, Col, Divider, Form, Modal, Row } from "antd";
+import { Button, Col, Divider, Form } from "antd";
 import { observer } from "mobx-react-lite";
-import { Meal } from "../Types/Meal";
 import { useEffect } from "react";
 import { useStore } from "../Stores/StoreProvider";
 import styles from "./MealsPage.module.scss";
 import { PlusOutlined } from "@ant-design/icons";
-import AddMealForm from "../Components/AddMealForm";
-import MealItemCard from "../Components/MealItemCard";
-import ViewMeal from "../Components/ViewMeal";
-import EditMealForm from "../Components/EditMealForm";
 import { Content, Footer } from "antd/lib/layout/layout";
 import SearchBar from "../Components/SearchBar";
+import TagItemCard from "../Components/Cards/TagItemCard";
+import { Tag } from "../Types/Meal";
 
 interface IMealPageProps {}
 
 const TagsPage = (props: IMealPageProps) => {
-    const { uiStore } = useStore();
-    const { mealStore } = useStore();
+    const { uiStore, tagStore } = useStore();
     const [form] = Form.useForm();
 
     useEffect(() => {
-        mealStore.loadTags();
-    }, [mealStore]);
+        tagStore.loadTags();
+    }, [tagStore]);
 
     const tagList = () => {
-        return mealStore.filteredMeals.map((meal: Meal) => {
+        return tagStore.filteredTags.map((tag: Tag) => {
             return (
-                <Col className="meal-item" key={meal.id}>
-                    <MealItemCard meal={meal} />
+                <Col className="tag-item" key={tag.id}>
+                    <TagItemCard tag={tag} />
                 </Col>
             );
         });
@@ -38,7 +34,9 @@ const TagsPage = (props: IMealPageProps) => {
             <Content className={styles.content}>
                 <SearchBar />
                 <Divider style={{ paddingBottom: "20px" }} />
-                <Row gutter={[16, 16]}>{tagList()}</Row>
+                {
+                    //<Row gutter={[16, 16]}>{tagList()}</Row>
+                }
             </Content>
             <Footer className={styles.footer}>
                 <div className="floating-button">
@@ -47,43 +45,10 @@ const TagsPage = (props: IMealPageProps) => {
                         shape="circle"
                         size="large"
                         icon={<PlusOutlined />}
-                        onClick={() => uiStore.setShowAddMealModal(true)}
+                        onClick={() => uiStore.setShowAddTagModal(true)}
                     />
                 </div>
             </Footer>
-
-            <Modal
-                title="Add meal"
-                visible={uiStore.showAddMealModal}
-                onOk={form.submit}
-                onCancel={() => {
-                    form.resetFields();
-                    uiStore.setShowAddMealModal(false);
-                }}
-                okText="Add"
-            >
-                <AddMealForm form={form} />
-            </Modal>
-            <Modal
-                visible={uiStore.showViewMealModal}
-                footer={false}
-                onOk={() => uiStore.setShowViewMealModal(false)}
-                onCancel={() => uiStore.setShowViewMealModal(false)}
-            >
-                <ViewMeal meal={mealStore.selectedMeal!} />
-            </Modal>
-            <Modal
-                title="Edit meal"
-                visible={uiStore.showEditMealModal}
-                okText="Save"
-                onOk={form.submit}
-                onCancel={() => {
-                    form.resetFields();
-                    uiStore.setShowEditMealModal(false);
-                }}
-            >
-                <EditMealForm form={form} meal={mealStore.selectedMeal!} />
-            </Modal>
         </>
     );
 };

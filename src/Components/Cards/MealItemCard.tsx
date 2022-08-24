@@ -1,16 +1,16 @@
 import { Button, Card, Empty, Popconfirm, Rate, Tag } from "antd";
-import { Meal, Tag as MealTag } from "../Types/Meal";
+import { Meal, Tag as MealTag } from "../../Types/Meal";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import "./MealItemCard.scss";
 import { observer } from "mobx-react-lite";
 import React from "react";
-import { useStore } from "../Stores/StoreProvider";
+import { useStore } from "../../Stores/StoreProvider";
 
-interface IMealRowProps {
+interface IMealItemProps {
     meal: Meal;
 }
 
-const MealItemCard = (props: IMealRowProps) => {
+const MealItemCard = (props: IMealItemProps) => {
     const { Meta } = Card;
     const { mealStore, uiStore } = useStore();
 

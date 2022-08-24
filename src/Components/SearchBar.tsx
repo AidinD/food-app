@@ -9,7 +9,7 @@ import { useEffect } from "react";
 interface ISearchBarProps {}
 
 const SearchBar = (props: ISearchBarProps) => {
-    const { mealStore } = useStore();
+    const { mealStore, tagStore } = useStore();
 
     useEffect(() => {
         mealStore.clearFilters();
@@ -43,7 +43,7 @@ const SearchBar = (props: ISearchBarProps) => {
                     placeholder="Tag"
                     allowClear
                     onChange={handleTagFilter}
-                    options={mealStore.tags.map((tag: Tag) => {
+                    options={tagStore.filteredTags.map((tag: Tag) => {
                         return {
                             value: tag.id,
                             label: tag.name,
