@@ -76,8 +76,6 @@ export class TagStore {
             });
         });
 
-        console.log("tagfilter", tagFilter);
-
         const textFilter = tagFilter.filter((tag) => {
             return tag.name
                 .toLowerCase()
@@ -109,6 +107,36 @@ export class TagStore {
         } finally {
             this.uiStore.setIsLoading(false);
             this.filterTags();
+        }
+    };
+
+    deleteTag = async (tag: Tag): Promise<boolean> => {
+        const requestOptions = {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+        };
+
+        try {
+            const response = await fetch(
+                configData.SERVER_URL + "tag/" + tag.id,
+                requestOptions
+            );
+            const dataJson: ResponseJson = await response.json();
+            if (response.status === 200) {
+                showNotification(
+                    "Success",
+                    "Tag was successfully deleted",
+                    "success",
+                    3
+                );
+                return Promise.resolve(true);
+            } else throw new Error(dataJson.data.message);
+        } catch (error: any) {
+            showNotification(error.toString(), "", "error", 0);
+            return Promise.resolve(false);
+        } finally {
+            this.uiStore.setIsLoading(false);
+            this.loadTags();
         }
     };
 }

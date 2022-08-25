@@ -35,6 +35,11 @@ const TagItemCard = (props: ITagItemProps) => {
         }
     };
 
+    const handleDeleteTagClick = (event?: React.MouseEvent<HTMLElement>) => {
+        preventEventPropagation(event);
+        tagStore.deleteTag(props.tag);
+    };
+
     const tagItemCard = () => {
         return (
             <Card
@@ -54,7 +59,7 @@ const TagItemCard = (props: ITagItemProps) => {
                         okText="Delete"
                         cancelText="Cancel"
                         placement="bottomLeft"
-                        onConfirm={() => {}}
+                        onConfirm={handleDeleteTagClick}
                         onCancel={preventEventPropagation}
                     >
                         <Button
