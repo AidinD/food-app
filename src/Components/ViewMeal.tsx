@@ -8,7 +8,7 @@ interface IViewMealProps {
     meal: Meal;
 }
 
-const AddMealForm = (props: IViewMealProps) => {
+const ViewMeal = (props: IViewMealProps) => {
     return (
         <Row className="viewContainer">
             <Col span={12}>
@@ -50,4 +50,4 @@ const AddMealForm = (props: IViewMealProps) => {
     );
 };
 
-export default observer(AddMealForm);
+export default observer(ViewMeal);
