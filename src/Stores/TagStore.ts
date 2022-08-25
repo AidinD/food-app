@@ -25,6 +25,8 @@ export class TagStore {
         this.uiStore = rootStore.uiStore;
         this.userStore = rootStore.userStore;
 
+        this.loadTags();
+
         makeAutoObservable(this, {
             // Observables
             tags: observable,
@@ -36,7 +38,6 @@ export class TagStore {
             // Computed
 
             // Actions
-            loadTags: action,
             setTags: action,
             setSelectedTag: action,
             setTextFilter: action,

@@ -1,4 +1,10 @@
-import { makeAutoObservable, observable, action, runInAction } from "mobx";
+import {
+    makeAutoObservable,
+    observable,
+    action,
+    runInAction,
+    computed,
+} from "mobx";
 import { Meal, MealForm, MealResponse, Tag } from "../Types/Meal";
 import RootStore from "./RootStore";
 import { UiStore } from "./UiStore";
@@ -21,6 +27,8 @@ export class MealStore {
     mealsFiltered: Meal[] = [];
     selectedMeal: Meal | undefined = undefined;
 
+    mealsUsingTag: number = 0;
+
     textFilter: string = "";
     tagFilter: number[] = [];
 
@@ -29,11 +37,14 @@ export class MealStore {
         this.uiStore = rootStore.uiStore;
         this.userStore = rootStore.userStore;
 
+        this.loadMeals();
+
         makeAutoObservable(this, {
             // Observables
             meals: observable,
             mealsFiltered: observable,
             selectedMeal: observable,
+            mealsUsingTag: observable,
             textFilter: observable,
             tagFilter: observable,
 
@@ -42,9 +53,9 @@ export class MealStore {
             // Actions
             setFilteredMeals: action,
             setSelectedMeal: action,
-            addMeal: action,
-            loadMeals: action,
+            setMealsUsingTag: action,
             setTextFilter: action,
+            setTagFilter: action,
         });
     }
 
@@ -62,6 +73,10 @@ export class MealStore {
 
     setSelectedMeal = (meal: Meal | undefined) => {
         this.selectedMeal = meal;
+    };
+
+    setMealsUsingTag = (amount: number) => {
+        this.mealsUsingTag = amount;
     };
 
     setTextFilter = (text: string) => {
@@ -91,6 +106,14 @@ export class MealStore {
         });
 
         this.setFilteredMeals([...textFilterMeals]);
+    };
+
+    filterMealsByTag = (tag: Tag) => {
+        const tagFilterMeals: Meal[] = this.meals.filter((meal) =>
+            meal.tags.some((mealTag) => mealTag.id === tag.id)
+        );
+        this.setMealsUsingTag(tagFilterMeals.length);
+        return tagFilterMeals;
     };
 
     loadMeals = async () => {

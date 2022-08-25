@@ -3,7 +3,7 @@ import { Tag as MealTag } from "../../Types/Meal";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import "./TagItemCard.scss";
 import { observer } from "mobx-react-lite";
-import React from "react";
+import React, { useEffect } from "react";
 import { useStore } from "../../Stores/StoreProvider";
 
 interface ITagItemProps {
@@ -12,7 +12,7 @@ interface ITagItemProps {
 
 const TagItemCard = (props: ITagItemProps) => {
     const { Meta } = Card;
-    const { tagStore, uiStore } = useStore();
+    const { tagStore, uiStore, mealStore } = useStore();
 
     const getCardDescription = () => {
         return (
@@ -26,6 +26,10 @@ const TagItemCard = (props: ITagItemProps) => {
                 <div className="tagDescription">{props.tag.color}</div>
             </>
         );
+    };
+
+    const countAmountOfMealsUsingTag = () => {
+        return mealStore.filterMealsByTag(props.tag);
     };
 
     const preventEventPropagation = (event?: React.MouseEvent<HTMLElement>) => {
@@ -44,6 +48,7 @@ const TagItemCard = (props: ITagItemProps) => {
 
     const handleDeleteTagClick = (event?: React.MouseEvent<HTMLElement>) => {
         preventEventPropagation(event);
+
         tagStore.deleteTag(props.tag);
     };
 
@@ -62,7 +67,15 @@ const TagItemCard = (props: ITagItemProps) => {
                         onClick={handleEditTagClick}
                     />,
                     <Popconfirm
-                        title="Are you sure you want to delete this?"
+                        title={
+                            <>
+                                <p>"Are you sure you want to delete this?"</p>
+                                <p>
+                                    {mealStore.mealsUsingTag} meals are using
+                                    this tag.
+                                </p>
+                            </>
+                        }
                         okText="Delete"
                         cancelText="Cancel"
                         placement="bottomLeft"
@@ -73,7 +86,10 @@ const TagItemCard = (props: ITagItemProps) => {
                             className="action-button"
                             size="large"
                             icon={<DeleteOutlined />}
-                            onClick={preventEventPropagation}
+                            onClick={() => {
+                                countAmountOfMealsUsingTag();
+                                preventEventPropagation();
+                            }}
                         />
                     </Popconfirm>,
                 ]}
