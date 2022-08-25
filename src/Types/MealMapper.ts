@@ -1,4 +1,11 @@
-import { Meal, MealDTO, MealForm, MealResponse, MealUpdateDTO } from "./Meal";
+import {
+    Meal,
+    MealDTO,
+    MealForm,
+    MealResponse,
+    MealUpdateDTO,
+    TagDTO,
+} from "./Meal";
 
 export const MapFromMealResponseToMeal = (mealResponse: MealResponse): Meal => {
     return {
@@ -42,6 +49,16 @@ export const MapFromMealFormToMealDTO = (
         tag_ids: meal.tag_values ? meal.tag_values.map((tag) => tag.value) : [],
         online_url: meal.recipe,
         image_url: meal.image,
+        user: user,
+    };
+};
+
+export const AddUserToTagDTO = (
+    tag: TagDTO,
+    user: number
+): TagDTO & { user: number } => {
+    return {
+        ...tag,
         user: user,
     };
 };

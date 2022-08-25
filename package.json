@@ -14,6 +14,7 @@
         "@types/react": "^18.0.15",
         "@types/react-dom": "^18.0.6",
         "antd": "^4.22.4",
+        "antd-colorpicker": "^1.0.0",
         "mobx": "^6.6.1",
         "mobx-react": "^7.5.2",
         "mobx-react-lite": "^3.4.0",

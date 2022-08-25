@@ -38,7 +38,7 @@ const EditMealForm = (props: IEditMealProps) => {
 
     return (
         <Form
-            name="addmeal"
+            name="editmeal"
             form={props.form}
             onFinish={onEditMeal}
             labelCol={{ span: 5 }}

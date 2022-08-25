@@ -1,4 +1,4 @@
-import { Button, Card, Empty, Popconfirm, Rate, Tag } from "antd";
+import { Button, Card, Popconfirm } from "antd";
 import { Tag as MealTag } from "../../Types/Meal";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import "./TagItemCard.scss";
@@ -35,6 +35,13 @@ const TagItemCard = (props: ITagItemProps) => {
         }
     };
 
+    const handleEditTagClick = (event?: React.MouseEvent<HTMLElement>) => {
+        preventEventPropagation();
+
+        tagStore.setSelectedTag(props.tag);
+        uiStore.setShowEditTagModal(true);
+    };
+
     const handleDeleteTagClick = (event?: React.MouseEvent<HTMLElement>) => {
         preventEventPropagation(event);
         tagStore.deleteTag(props.tag);
@@ -52,7 +59,7 @@ const TagItemCard = (props: ITagItemProps) => {
                         className="action-button"
                         size="large"
                         icon={<EditOutlined />}
-                        onClick={() => {}}
+                        onClick={handleEditTagClick}
                     />,
                     <Popconfirm
                         title="Are you sure you want to delete this?"

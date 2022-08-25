@@ -14,3 +14,7 @@ export type RouteNames =
     | "Tags"
     | "Categories"
     | "Login";
+
+export type Color = {
+    hex: string;
+};

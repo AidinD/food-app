@@ -1,4 +1,4 @@
-import { Button, Col, Divider, Form, Row } from "antd";
+import { Button, Col, Divider, Form, Modal, Row } from "antd";
 import { observer } from "mobx-react-lite";
 import { useEffect } from "react";
 import { useStore } from "../Stores/StoreProvider";
@@ -8,10 +8,12 @@ import { Content, Footer } from "antd/lib/layout/layout";
 import SearchBar from "../Components/SearchBar";
 import TagItemCard from "../Components/Cards/TagItemCard";
 import { Tag } from "../Types/Meal";
+import AddTagForm from "../Components/Forms/AddTagForm";
+import EditTagForm from "../Components/Forms/EditTagForm";
 
-interface IMealPageProps {}
+interface ITagPageProps {}
 
-const TagsPage = (props: IMealPageProps) => {
+const TagsPage = (props: ITagPageProps) => {
     const { uiStore, tagStore } = useStore();
     const [form] = Form.useForm();
 
@@ -47,6 +49,30 @@ const TagsPage = (props: IMealPageProps) => {
                     />
                 </div>
             </Footer>
+            <Modal
+                title="Add tag"
+                visible={uiStore.showAddTagModal}
+                onOk={form.submit}
+                onCancel={() => {
+                    form.resetFields();
+                    uiStore.setShowAddTagModal(false);
+                }}
+                okText="Add"
+            >
+                <AddTagForm form={form} />
+            </Modal>
+            <Modal
+                title="Edit tag"
+                visible={uiStore.showEditTagModal}
+                okText="Save"
+                onOk={form.submit}
+                onCancel={() => {
+                    form.resetFields();
+                    uiStore.setShowEditTagModal(false);
+                }}
+            >
+                <EditTagForm form={form} tag={tagStore.selectedTag!} />
+            </Modal>
         </>
     );
 };

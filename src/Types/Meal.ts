@@ -63,6 +63,21 @@ export type Tag = {
     color: string;
 };
 
+export type TagDTO = {
+    name: string;
+    color: string;
+    user: number;
+};
+
+export type TagResponse = {
+    id: number;
+    name: string;
+    color: string;
+    user: number;
+    updated_at: Date;
+    created_at: Date;
+};
+
 export type Recipe = {
     id: number;
     ingredients: Ingredient[];

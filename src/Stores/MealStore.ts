@@ -157,36 +157,6 @@ export class MealStore {
         }
     };
 
-    deleteMeal = async (meal: Meal): Promise<boolean> => {
-        const requestOptions = {
-            method: "DELETE",
-            headers: { "Content-Type": "application/json" },
-        };
-
-        try {
-            const response = await fetch(
-                configData.SERVER_URL + "meal/" + meal.id,
-                requestOptions
-            );
-            const dataJson: ResponseJson = await response.json();
-            if (response.status === 200) {
-                showNotification(
-                    "Success",
-                    "Meal was successfully deleted",
-                    "success",
-                    3
-                );
-                return Promise.resolve(true);
-            } else throw new Error(dataJson.data.message);
-        } catch (error: any) {
-            showNotification(error.toString(), "", "error", 0);
-            return Promise.resolve(false);
-        } finally {
-            this.uiStore.setIsLoading(false);
-            this.loadMeals();
-        }
-    };
-
     updateMeal = async (meal: Meal): Promise<boolean> => {
         const requestOptions = {
             method: "PUT",
@@ -210,6 +180,36 @@ export class MealStore {
                     3
                 );
                 this.uiStore.setShowEditMealModal(false);
+                return Promise.resolve(true);
+            } else throw new Error(dataJson.data.message);
+        } catch (error: any) {
+            showNotification(error.toString(), "", "error", 0);
+            return Promise.resolve(false);
+        } finally {
+            this.uiStore.setIsLoading(false);
+            this.loadMeals();
+        }
+    };
+
+    deleteMeal = async (meal: Meal): Promise<boolean> => {
+        const requestOptions = {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" },
+        };
+
+        try {
+            const response = await fetch(
+                configData.SERVER_URL + "meal/" + meal.id,
+                requestOptions
+            );
+            const dataJson: ResponseJson = await response.json();
+            if (response.status === 200) {
+                showNotification(
+                    "Success",
+                    "Meal was successfully deleted",
+                    "success",
+                    3
+                );
                 return Promise.resolve(true);
             } else throw new Error(dataJson.data.message);
         } catch (error: any) {

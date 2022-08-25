@@ -1,11 +1,12 @@
 import { makeAutoObservable, observable, action } from "mobx";
-import { Tag } from "../Types/Meal";
+import { Tag, TagDTO } from "../Types/Meal";
 import RootStore from "./RootStore";
 import { UiStore } from "./UiStore";
 import configData from "../Config/config.json";
 import { ResponseJson } from "../Types/Shared";
 import { showNotification } from "../Utils/Notification";
 import { UserStore } from "./UserStore";
+import { AddUserToTagDTO } from "../Types/MealMapper";
 
 export class TagStore {
     rootStore: RootStore;
@@ -36,7 +37,10 @@ export class TagStore {
 
             // Actions
             loadTags: action,
+            setTags: action,
+            setSelectedTag: action,
             setTextFilter: action,
+            setTagFilter: action,
         });
     }
 
@@ -47,6 +51,10 @@ export class TagStore {
     get filteredTags() {
         return this.tagsFiltered;
     }
+
+    setSelectedTag = (tag: Tag) => {
+        this.selectedTag = tag;
+    };
 
     setFilteredTags = (tags: Tag[]) => {
         this.tagsFiltered = tags.sort((a, b) => a.name.localeCompare(b.name));
@@ -107,6 +115,72 @@ export class TagStore {
         } finally {
             this.uiStore.setIsLoading(false);
             this.filterTags();
+        }
+    };
+
+    addTag = async (tag: TagDTO): Promise<boolean> => {
+        const requestOptions = {
+            method: "PUT",
+            body: JSON.stringify(
+                AddUserToTagDTO(tag, this.userStore.currentUser!.id)
+            ),
+            headers: { "Content-Type": "application/json" },
+        };
+
+        try {
+            const response = await fetch(
+                configData.SERVER_URL + "tag",
+                requestOptions
+            );
+            const dataJson: ResponseJson = await response.json();
+            if (response.status === 200) {
+                showNotification(
+                    "Success",
+                    "Tag was successfully added",
+                    "success",
+                    3
+                );
+                this.uiStore.setShowAddTagModal(false);
+                return Promise.resolve(true);
+            } else throw new Error(dataJson.data.message);
+        } catch (error: any) {
+            showNotification(error.toString(), "", "error", 0);
+            return Promise.resolve(false);
+        } finally {
+            this.uiStore.setIsLoading(false);
+            this.loadTags();
+        }
+    };
+
+    updateTag = async (tag: Tag): Promise<boolean> => {
+        const requestOptions = {
+            method: "PUT",
+            body: JSON.stringify(tag),
+            headers: { "Content-Type": "application/json" },
+        };
+
+        try {
+            const response = await fetch(
+                configData.SERVER_URL + "tag/" + tag.id,
+                requestOptions
+            );
+            const dataJson: ResponseJson = await response.json();
+            if (response.status === 200) {
+                showNotification(
+                    "Success",
+                    "Tag was successfully updated",
+                    "success",
+                    3
+                );
+                this.uiStore.setShowEditTagModal(false);
+                return Promise.resolve(true);
+            } else throw new Error(dataJson.data.message);
+        } catch (error: any) {
+            showNotification(error.toString(), "", "error", 0);
+            return Promise.resolve(false);
+        } finally {
+            this.uiStore.setIsLoading(false);
+            this.loadTags();
         }
     };
 
