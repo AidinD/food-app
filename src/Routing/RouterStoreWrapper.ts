@@ -40,7 +40,11 @@ export class RouterStoreWrapper {
 
     goToHomePage(options?: { [key: string]: any }) {
         this.routerStore.goTo("home", options);
-        this.routerStore.goTo("home", options);
+        this.rootStore.uiStore.setShowSideBar(true);
+    }
+
+    goToPlannerPage(options?: { [key: string]: any }) {
+        this.routerStore.goTo("planner", options);
         this.rootStore.uiStore.setShowSideBar(true);
     }
 

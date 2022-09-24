@@ -3,7 +3,7 @@ import { Tag as MealTag } from "../../Types/Meal";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import "./TagItemCard.scss";
 import { observer } from "mobx-react-lite";
-import React, { useEffect } from "react";
+import React from "react";
 import { useStore } from "../../Stores/StoreProvider";
 
 interface ITagItemProps {

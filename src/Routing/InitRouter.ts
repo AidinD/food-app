@@ -15,6 +15,10 @@ export const routes: Route[] = [
         pattern: "/",
     },
     {
+        name: "planner",
+        pattern: "/planner",
+    },
+    {
         name: "meals",
         pattern: "/meals/",
     },

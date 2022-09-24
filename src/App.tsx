@@ -57,7 +57,8 @@ const App = () => {
             "Planner",
             "planner",
             "item",
-            <FontAwesomeIcon icon={faCalendarDay} />
+            <FontAwesomeIcon icon={faCalendarDay} />,
+            () => routerStore.goToPlannerPage()
         ),
         getItem(
             "Shopping List",
