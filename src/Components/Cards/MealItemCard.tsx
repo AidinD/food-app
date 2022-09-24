@@ -23,7 +23,6 @@ const MealItemCard = (props: IMealItemProps) => {
                     allowHalf
                     value={props.meal.rating}
                 />
-                <div>{props.meal.description}</div>
                 <div className="tags-container">
                     {props.meal.tags.map((tag: MealTag) => (
                         <Tag key={tag.id} color={tag.color}>
