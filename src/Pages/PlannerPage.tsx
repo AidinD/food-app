@@ -1,16 +1,19 @@
-import { Button, Col, Divider, Form, Modal, Row } from "antd";
+import { Button, Col, Divider, Form, Input, Modal, Row, Select } from "antd";
 import { observer } from "mobx-react-lite";
-import { Meal } from "../Types/Meal";
+import { Meal, Tag } from "../Types/Meal";
 import { useEffect } from "react";
 import { useStore } from "../Stores/StoreProvider";
 import styles from "./PlannerPage.module.scss";
-import { PlusOutlined } from "@ant-design/icons";
+import {
+    PlusOutlined,
+    MinusOutlined,
+    InteractionOutlined,
+} from "@ant-design/icons";
 import AddMealForm from "../Components/Forms/AddMealForm";
 import MealItemCard from "../Components/Cards/MealItemCard";
 import ViewMeal from "../Components/ViewMeal";
 import EditMealForm from "../Components/Forms/EditMealForm";
 import { Content, Footer } from "antd/lib/layout/layout";
-import SearchBar from "../Components/SearchBar";
 
 interface IMealPageProps {}
 
@@ -33,10 +36,57 @@ const MealsPage = (props: IMealPageProps) => {
         });
     };
 
+    const header = () => {
+        return (
+            <Input.Group>
+                <Row className={styles.plannerHeader} gutter={[16, 16]}>
+                    <Col className={styles.groupColumn} span={2}>
+                        <Button
+                            className={styles.inputButton}
+                            type="primary"
+                            icon={<MinusOutlined />}
+                        ></Button>
+                        <Input
+                            id={styles.amountInput}
+                            readOnly
+                            defaultValue={3}
+                        ></Input>
+                        <Button
+                            className={styles.inputButton}
+                            type="primary"
+                            icon={<PlusOutlined />}
+                        ></Button>
+                    </Col>
+                    <Col className={styles.groupColumn} span={3}>
+                        <Select
+                            className={styles.tagSelect}
+                            mode="multiple"
+                            maxTagCount="responsive"
+                            placeholder="Tag"
+                            allowClear
+                            options={tagStore.tags.map((tag: Tag) => {
+                                return {
+                                    value: tag.id,
+                                    label: tag.name,
+                                };
+                            })}
+                        ></Select>
+                    </Col>
+                    <Col className={styles.groupColumn} span={2}>
+                        <Button
+                            type="primary"
+                            icon={<InteractionOutlined />}
+                        ></Button>
+                    </Col>
+                </Row>
+            </Input.Group>
+        );
+    };
+
     return (
         <>
             <Content className={styles.content}>
-                <SearchBar route="Meals" />
+                {header()}
                 <Divider style={{ paddingBottom: "20px" }} />
                 <Row gutter={[16, 16]}>{mealList()}</Row>
             </Content>
