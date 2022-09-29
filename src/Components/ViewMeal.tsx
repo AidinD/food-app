@@ -1,6 +1,8 @@
 import { Col, Divider, Empty, Image, Rate, Row, Tag as TagAnt } from "antd";
 import Title from "antd/lib/typography/Title";
 import { observer } from "mobx-react-lite";
+import { useEffect } from "react";
+import { useStore } from "../Stores/StoreProvider";
 import { Meal, Tag } from "../Types/Meal";
 import "./ViewMeal.scss";
 
@@ -40,7 +42,7 @@ const ViewMeal = (props: IViewMealProps) => {
                             <Rate
                                 disabled
                                 allowHalf
-                                defaultValue={props.meal.rating}
+                                value={props.meal.rating}
                             />
                         </div>
                     </div>

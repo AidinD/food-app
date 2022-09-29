@@ -12,3 +12,9 @@
     margin-bottom: 2px;
     font-weight: 600;
 }
+
+#link {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
