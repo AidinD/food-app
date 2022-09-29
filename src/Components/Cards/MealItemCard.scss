@@ -1,10 +1,13 @@
 .ant-card {
     width: 200px;
+    display: flex;
+    flex-direction: column;
 }
 
 .ant-card > .ant-card-cover {
     height: 180px;
     overflow: hidden;
+    flex: auto;
 }
 
 .ant-card > .ant-card-body {

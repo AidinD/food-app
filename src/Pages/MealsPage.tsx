@@ -26,7 +26,7 @@ const MealsPage = (props: IMealPageProps) => {
     const mealList = () => {
         return mealStore.filteredMeals.map((meal: Meal) => {
             return (
-                <Col className="meal-item" key={meal.id}>
+                <Col className={styles.mealItem} key={meal.id}>
                     <MealItemCard meal={meal} />
                 </Col>
             );
