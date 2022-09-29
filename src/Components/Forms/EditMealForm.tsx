@@ -27,6 +27,7 @@ const EditMealForm = (props: IEditMealProps) => {
             ...values,
             tags,
         };
+
         if (await mealStore.updateMeal(updatedMeal)) {
             props.form.resetFields();
         }

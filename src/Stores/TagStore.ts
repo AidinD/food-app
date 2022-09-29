@@ -110,7 +110,7 @@ export class TagStore {
             const dataJson: ResponseJson = await response.json();
             if (response.status === 200) {
                 this.setTags(dataJson.data as Tag[]);
-            } else throw new Error(dataJson.data.message);
+            } else throw new Error(dataJson.data);
         } catch (error: any) {
             showNotification(error.toString(), "", "error", 0);
         } finally {
@@ -143,7 +143,7 @@ export class TagStore {
                 );
                 this.uiStore.setShowAddTagModal(false);
                 return Promise.resolve(true);
-            } else throw new Error(dataJson.data.message);
+            } else throw new Error(dataJson.data);
         } catch (error: any) {
             showNotification(error.toString(), "", "error", 0);
             return Promise.resolve(false);
@@ -175,7 +175,7 @@ export class TagStore {
                 );
                 this.uiStore.setShowEditTagModal(false);
                 return Promise.resolve(true);
-            } else throw new Error(dataJson.data.message);
+            } else throw new Error(dataJson.data);
         } catch (error: any) {
             showNotification(error.toString(), "", "error", 0);
             return Promise.resolve(false);
@@ -205,7 +205,7 @@ export class TagStore {
                     3
                 );
                 return Promise.resolve(true);
-            } else throw new Error(dataJson.data.message);
+            } else throw new Error(dataJson.data);
         } catch (error: any) {
             showNotification(error.toString(), "", "error", 0);
             return Promise.resolve(false);

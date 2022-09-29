@@ -91,7 +91,7 @@ export class UserStore {
             if (response.status === 200) {
                 this.uiStore.setShowSignUpModal(false);
                 showNotification("User successfully created", "", "success", 3);
-            } else throw new Error(dataJson.data.message);
+            } else throw new Error(dataJson.data);
         } catch (error: any) {
             showNotification(error.toString(), "", "error", 0);
         } finally {

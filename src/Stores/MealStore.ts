@@ -17,6 +17,7 @@ import {
     MapFromMealToMealUpdateDTO,
 } from "../Types/MealMapper";
 import { UserStore } from "./UserStore";
+import { message } from "antd";
 
 export class MealStore {
     rootStore: RootStore;
@@ -137,7 +138,7 @@ export class MealStore {
                             MapFromMealResponseToMeal(mealResponse)
                     );
                 });
-            } else throw new Error(dataJson.data.message);
+            } else throw new Error(dataJson.data);
         } catch (error: any) {
             showNotification(error.toString(), "", "error", 0);
         } finally {
@@ -170,7 +171,7 @@ export class MealStore {
                 );
                 this.uiStore.setShowAddMealModal(false);
                 return Promise.resolve(true);
-            } else throw new Error(dataJson.data.message);
+            } else throw new Error(dataJson.data);
         } catch (error: any) {
             showNotification(error.toString(), "", "error", 0);
             return Promise.resolve(false);
@@ -204,7 +205,7 @@ export class MealStore {
                 );
                 this.uiStore.setShowEditMealModal(false);
                 return Promise.resolve(true);
-            } else throw new Error(dataJson.data.message);
+            } else throw new Error(dataJson.data);
         } catch (error: any) {
             showNotification(error.toString(), "", "error", 0);
             return Promise.resolve(false);
@@ -234,7 +235,7 @@ export class MealStore {
                     3
                 );
                 return Promise.resolve(true);
-            } else throw new Error(dataJson.data.message);
+            } else throw new Error(dataJson.data);
         } catch (error: any) {
             showNotification(error.toString(), "", "error", 0);
             return Promise.resolve(false);
