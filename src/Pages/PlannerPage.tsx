@@ -38,48 +38,46 @@ const MealsPage = (props: IMealPageProps) => {
 
     const header = () => {
         return (
-            <Input.Group>
-                <Row className={styles.plannerHeader} gutter={[16, 16]}>
-                    <Col className={styles.groupColumn} span={2}>
-                        <Button
-                            className={styles.inputButton}
-                            type="primary"
-                            icon={<MinusOutlined />}
-                        ></Button>
-                        <Input
-                            id={styles.amountInput}
-                            readOnly
-                            defaultValue={3}
-                        ></Input>
-                        <Button
-                            className={styles.inputButton}
-                            type="primary"
-                            icon={<PlusOutlined />}
-                        ></Button>
-                    </Col>
-                    <Col className={styles.groupColumn} span={3}>
-                        <Select
-                            className={styles.tagSelect}
-                            mode="multiple"
-                            maxTagCount="responsive"
-                            placeholder="Tag"
-                            allowClear
-                            options={tagStore.tags.map((tag: Tag) => {
-                                return {
-                                    value: tag.id,
-                                    label: tag.name,
-                                };
-                            })}
-                        ></Select>
-                    </Col>
-                    <Col className={styles.groupColumn} span={2}>
-                        <Button
-                            type="primary"
-                            icon={<InteractionOutlined />}
-                        ></Button>
-                    </Col>
-                </Row>
-            </Input.Group>
+            <Row className={styles.row} gutter={[16, 16]}>
+                <Col className={styles.column}>
+                    <Button
+                        className={styles.inputButton}
+                        type="primary"
+                        icon={<MinusOutlined />}
+                    ></Button>
+                    <Input
+                        id={styles.amountInput}
+                        readOnly
+                        defaultValue={3}
+                    ></Input>
+                    <Button
+                        className={styles.inputButton}
+                        type="primary"
+                        icon={<PlusOutlined />}
+                    ></Button>
+                </Col>
+                <Col className={styles.column}>
+                    <Select
+                        className={styles.tagSelect}
+                        mode="multiple"
+                        maxTagCount="responsive"
+                        placeholder="Tag"
+                        allowClear
+                        options={tagStore.tags.map((tag: Tag) => {
+                            return {
+                                value: tag.id,
+                                label: tag.name,
+                            };
+                        })}
+                    ></Select>
+                </Col>
+                <Col className={styles.column}>
+                    <Button
+                        type="primary"
+                        icon={<InteractionOutlined />}
+                    ></Button>
+                </Col>
+            </Row>
         );
     };
 

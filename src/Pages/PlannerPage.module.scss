@@ -20,21 +20,19 @@
     align-items: center;
 }
 
-.groupColumn {
+.column {
     display: flex;
-}
-
-.inputButton {
-    width: auto;
-    padding: inherit;
+    flex-direction: row;
 }
 
 #amountInput {
     text-align: center;
+    width: 50px;
 }
 
 .tagSelect {
-    width: 100%;
+    width: 300px;
+    flex-grow: 1;
 }
 
 .footer {
