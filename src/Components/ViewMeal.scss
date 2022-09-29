@@ -3,9 +3,14 @@
 }
 
 .viewFooter {
-    position: absolute;
     bottom: 0;
     width: 100%;
+}
+
+#description {
+    white-space: pre-wrap;
+    margin-bottom: 20px;
+    flex-basis: inherit;
 }
 
 #tagList > .ant-tag {
@@ -17,4 +22,15 @@
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    margin-bottom: 10px;
+}
+
+.divider {
+    margin: 12px 0;
+}
+
+.contentColumn {
+    height: inherit;
+    display: flex;
+    flex-direction: column;
 }

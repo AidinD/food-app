@@ -20,7 +20,7 @@ const ViewMeal = (props: IViewMealProps) => {
                     <Empty description={"No image available"} />
                 )}
             </Col>
-            <Col offset={1} span={11}>
+            <Col className="contentColumn" offset={1} span={11}>
                 <Title id="title" level={2}>
                     {props.meal.name}
                 </Title>
@@ -37,14 +37,10 @@ const ViewMeal = (props: IViewMealProps) => {
                                 {tag.name}
                             </TagAnt>
                         ))}
-                        <Divider></Divider>
-                        <div id="rate">
-                            <Rate
-                                disabled
-                                allowHalf
-                                value={props.meal.rating}
-                            />
-                        </div>
+                    </div>
+                    <Divider className="divider"></Divider>
+                    <div id="rate">
+                        <Rate disabled allowHalf value={props.meal.rating} />
                     </div>
                 </div>
             </Col>
